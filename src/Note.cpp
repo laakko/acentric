@@ -2,19 +2,39 @@
 #include <map>
 #include "Note.h"
 
-Note::Note(std::string human_name)
+Note::Note(std::string humanName, Key key)
 {
 	// TODO error check
-	pitch = Note::s_note.at(human_name);
+	pianoKeyNum = Note::s_note.at(humanName);
+	this->key = key;
 }
 
-Note::Note(int pitch)
+Note::Note(int pianoKeyNum, Key key)
 {
 	// TODO bounds check 1-88
-	this->pitch = pitch;
+	this->pianoKeyNum = pianoKeyNum;
+	this->key = key;
+}
+
+int Note::octave() {
+	if (pianoKeyNum <= 3) {
+		return 0;
+	}
+	else if (pianoKeyNum == 88) {
+		return 8;
+	}
+	else {
+		return (pianoKeyNum + 8) % 12;
+	}
+}
+
+std::string Note::name() {
+	// TODO implement; this will be a big one since it must incorporate scale
+	return "C";
 }
 
 // Human-readable -> integer representation
+// TODO handle odd cases like Cb or E#
 const std::map<std::string, int> Note::s_note{
 	{ "A0", 1 },  { "A#0", 2 }, { "Bb0", 2 }, { "B0", 3 },
 	{ "C1", 4 },  { "C#1", 5 }, { "Db1", 5 }, { "D1", 6 },
