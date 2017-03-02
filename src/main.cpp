@@ -1,15 +1,19 @@
 #include <iostream>
-#include <map>
+#include <string>
+#include "BasicNote.h"
 #include "Note.h"
 
-int main(){
-    std::cout << "Test\n";
+int main() {
+	std::cout << "Test\n";
 
-	std::cout << Note::s_note.at("A0") << std::endl << 
-		Note::s_note.at("C#4") << std::endl << 
-		Note::s_note.at("Db4") << std::endl;
+	try {
+		Note testNote{ BasicNote::A, 0, 4 };
+		Note badNote{ BasicNote::F, -3, 5 };
+	}
+	catch (const std::string& exception) {
+		std::cout << "Error: " << exception;
+	}
 
-	Note n{ "C#4" };
 
 	int i;
 	std::cin >> i;

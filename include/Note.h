@@ -3,24 +3,19 @@
 #define NOTE_H
 
 #include <string>
-#include <map>
-#include "Key.h"
+#include "BasicNote.h"
 
 class Note{
 
 private:
-	int pianoKeyNum{ 40 }; // Valid range 1-88; default Middle-C
-	Key key{ Key::C };
-
-	int octave();
-	std::string name();
+	BasicNote base;
+	int offset; // -2, -1, 0, 1, or 2 (semitones)
+	int octave;
 
 public:
-	Note(std::string humanName, Key = Key::C);
-	Note(int pianoKeyNum, Key = Key::C);
-	// TODO overload <<
-
-	static const std::map<std::string, int> s_note;
+	Note(BasicNote base = BasicNote::C, int offset = 0, int octave = 4);
+	Note(std::string textNote = "C4");
+	
 };
 
 #endif // NOTE_H
