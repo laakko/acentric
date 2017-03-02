@@ -18,8 +18,13 @@ int main() {
 
 	std::cout << testNote << std::endl;
 
-	Note testNote2{ BasicNote::F, 2, 3 };
+	Note testNote2{ BasicNote::F, 2, -3 };
 	std::cout << testNote2 << std::endl;
+
+	std::cout << testNote2.baseToBaseDistance(BasicNote::E) << std::endl;
+	std::cout << testNote2.baseToBaseDistance(BasicNote::G, false) << std::endl;
+
+	std::cout << testNote2.getAbsoluteDistance() << std::endl;
 
 	int i;
 	std::cin >> i;

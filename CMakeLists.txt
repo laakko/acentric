@@ -6,6 +6,7 @@ project (music-theory)
 include_directories(include)
 
 add_executable (main
+	include/BasicNote.h
 	include/Note.h
 	src/Note.cpp
 	src/main.cpp
