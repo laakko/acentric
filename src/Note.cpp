@@ -94,8 +94,8 @@ Note Note::getOtherNote(const Interval &interval, bool getHigherNote) const
 	int otherBase{ static_cast<int>(base) };
 	int otherOffset{ offset };
 
-	otherOctave += ((interval.getBasicInterval() - 1) / 7);
-	otherBase += ((interval.getBasicInterval() - 1) % 7);
+	otherOctave += (interval.getbasicDistance() / 7);
+	otherBase += (interval.getbasicDistance() % 7);
 
 	otherOctave += otherBase / 7;
 	otherBase %= 7;
@@ -108,9 +108,9 @@ Note Note::getOtherNote(const Interval &interval, bool getHigherNote) const
 
 Interval Note::getInterval(const Note & other) const
 {
-	int basicInterval = getBasicDistance(other) + 1; // offset required since intervals count the starting note as 1, not 0
+	int basicDistance = getBasicDistance(other);
 	int semitones = getRelativeDistance(other);
-	return Interval(basicInterval, semitones);
+	return Interval(basicDistance, semitones);
 }
 
 std::ostream& operator<<(std::ostream &os, const Note &note)

@@ -35,7 +35,7 @@ public:
 
 	// TODO Perhaps these should actually be part of the Interval class
 	int getAbsoluteDistance() const; // Distance from A0; returns negative for negative-octave notes
-	int getBasicDistance(const Note &other) const; // Returns 0 if it's the same base and octave (change to 1? probably not)
+	int getBasicDistance(const Note &other) const;
 	int getRelativeDistance(const Note &other) const;
 
 	Note getOtherNote(const Interval &interval, bool getHigherNote = true) const;

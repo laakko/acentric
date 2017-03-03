@@ -8,17 +8,17 @@ class Note;
 class Interval {
 
 private:
-	int basicInterval; // e.g. interval from C4-E4 is 3
+	int basicDistance; // e.g. distance from C4-E4 is 2
 	int semitones;
 
 public:
-	Interval(int basicInterval = 1, int semitones = 0);
+	Interval(int basicDistance = 0, int semitones = 0);
 	//Interval(std::string commonName); // TODO implement
 
-	int getBasicInterval() const { return basicInterval; }
+	int getbasicDistance() const { return basicDistance; }
 	int getSemitones() const { return semitones; }
 };
 
-//std::ostream& operator<<(std::ostream &os, const Interval &interval); // TODO implement
+std::ostream& operator<<(std::ostream &os, const Interval &interval);
 
 #endif // INTERVAL_H
