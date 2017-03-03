@@ -6,6 +6,7 @@
 #include <iostream>
 #include "BasicNote.h"
 #include "Interval.h"
+class Interval;
 
 class Note{
 
@@ -38,9 +39,8 @@ public:
 	int getRelativeDistance(const Note &other) const;
 
 	Note getOtherNote(const Interval &interval, bool getHigherNote = true) const;
-	Interval getInterval(const Note &other) const { return Interval(*this, other); } // TODO test!
+	Interval getInterval(const Note &other) const; // TODO test!
 	//bool simplify(); // TODO implement e.g. E# -> F, Abb -> G. Return true if something changed
-
 };
 
 std::ostream& operator<<(std::ostream &os, const Note &note);

@@ -3,6 +3,7 @@
 #define INTERVAL_H
 
 #include "Note.h"
+class Note;
 
 class Interval {
 
@@ -12,7 +13,6 @@ private:
 
 public:
 	Interval(int basicInterval = 1, int semitones = 0);
-	Interval(const Note &firstNote, const Note &secondNote);
 	//Interval(std::string commonName); // TODO implement
 
 	int getBasicInterval() const { return basicInterval; }

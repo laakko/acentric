@@ -10,9 +10,3 @@ Interval::Interval(int basicInterval, int semitones)
 		throw "bad semitones parameter in Interval ctor: " + std::to_string(semitones);
 	this->semitones = semitones;
 }
-
-Interval::Interval(const Note &firstNote, const Note &secondNote)
-{
-	basicInterval = firstNote.getBasicDistance(secondNote) + 1; // offset required since intervals count the starting note as 1, not 0
-	semitones = firstNote.getRelativeDistance(secondNote);
-}

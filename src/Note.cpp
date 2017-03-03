@@ -106,6 +106,13 @@ Note Note::getOtherNote(const Interval &interval, bool getHigherNote) const
 	return Note(static_cast<BasicNote>(otherBase), otherOffset, otherOctave); // TODO test, test, test!
 }
 
+Interval Note::getInterval(const Note & other) const
+{
+	int basicInterval = getBasicDistance(other) + 1; // offset required since intervals count the starting note as 1, not 0
+	int semitones = getRelativeDistance(other);
+	return Interval(basicInterval, semitones);
+}
+
 std::ostream& operator<<(std::ostream &os, const Note &note)
 {
 	// Print base note
@@ -136,19 +143,19 @@ std::ostream& operator<<(std::ostream &os, const Note &note)
 	// Print sharps or flats
 	// TODO rewrite to allow more flexibility
 	// e.g. if offset is -7 print (b^7)
-	switch (note.getOffset()) {
-	case -2:
+	if (note.getOffset() < -2) {
+		os << "(b^" << note.getOffset() << ")";
+	}
+	else if (note.getOffset() == -2)
 		os << "bb";
-		break;
-	case -1:
+	else if (note.getOffset() == -1)
 		os << "b";
-		break;
-	case 1:
+	else if (note.getOffset() == 1)
 		os << "#";
-		break;
-	case 2:
-		os << "##"; // TODO which is better...## or x?
-		break;
+	else if (note.getOffset() == 2)
+		os << "##"; // TODO should this be x instead? probably not
+	else if (note.getOffset() > 2) {
+		os << "(#^" << note.getOffset() << ")";
 	}
 
 	// Print octave
