@@ -2,16 +2,23 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 
+#include "Note.h"
+
 class Interval {
 
 private:
-	int basicNotesEncompassed;
-	int semitonesFromBase; // if negative, this is a lower interval
+	int basicInterval; // e.g. interval from C4-E4 is 3
+	int semitones;
 
 public:
-	Interval(int basicNotesEncompassed = 1, int semitonesFromBase = 0);
-	//Interval(std::string commonName, bool upper = true); // TODO implement
+	Interval(int basicInterval = 1, int semitones = 0);
+	Interval(const Note &firstNote, const Note &secondNote);
+	//Interval(std::string commonName); // TODO implement
 
+	int getBasicInterval() const { return basicInterval; }
+	int getSemitones() const { return semitones; }
 };
+
+//std::ostream& operator<<(std::ostream &os, const Interval &interval); // TODO implement
 
 #endif // INTERVAL_H

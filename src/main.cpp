@@ -6,25 +6,17 @@
 int main() {
 	std::cout << "Test\n";
 
-	Note testNote;
-	Note badNote;
-	try {
-		testNote = Note::Note(BasicNote::A, 0, 4 );
-		badNote = Note::Note(BasicNote::F, -3, 5);
-	}
-	catch (const std::string &exception) {
-		std::cout << "Error: " << exception << std::endl;
-	}
+	Note testNote = Note::Note(BasicNote::A, 0, 4 );
+	Note badNote = Note::Note(BasicNote::F, -3, 5);
 
 	std::cout << testNote << std::endl;
 
 	Note testNote2{ BasicNote::F, 2, -3 };
-	std::cout << testNote2 << std::endl;
+	Note testNote3{ BasicNote::D, 0, 5 };
+	Note testNote4{ BasicNote::B, 2, 4 };
+	Note testNote5{ BasicNote::C, 1, 4 };
 
-	std::cout << testNote2.baseToBaseDistance(BasicNote::E) << std::endl;
-	std::cout << testNote2.baseToBaseDistance(BasicNote::G, false) << std::endl;
-
-	std::cout << testNote2.getAbsoluteDistance() << std::endl;
+	std::cout << testNote4.getBasicDistance(testNote2) << std::endl;
 
 	int i;
 	std::cin >> i;

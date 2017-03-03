@@ -5,8 +5,6 @@ Note::Note(BasicNote base, int offset, int octave)
 {
 	// TODO validate input
 	this->base = base;
-	if (offset < -2 || offset > 2)
-		throw "bad offset given to Note constructor: " + std::to_string(offset);
 	this->offset = offset;
 	this->octave = octave;
 }
@@ -17,9 +15,10 @@ int Note::getAbsoluteDistance() const
 	distance += octave * 12;
 	distance += offset;
 
+	// TODO rewrite without cast?
 	switch (static_cast<int>(base)) {
 	case 0: // A
-		break; // A is already 0
+		break; // no need to add anything
 	case 1: // B
 		distance += 2;
 		break;
@@ -42,41 +41,69 @@ int Note::getAbsoluteDistance() const
 	return distance;
 }
 
-int Note::baseToBaseDistance(BasicNote other, bool upper) const
+int Note::getBasicDistance(const Note &other) const
 {
-	int thisBase{ static_cast<int>(base) };
-	int otherBase{ static_cast<int>(other) };
-	int distance{ 0 };
+	int thisBase = static_cast<int>(base);
+	int otherBase = static_cast<int>(other.getBase());
+	int thisOctave = octave;
+	int otherOctave = other.getOctave();
 
-	while (thisBase != otherBase) {
-		if (upper) {
-			// Count upward mod 7
-			if (thisBase == 1 || thisBase == 4) {
-				// B->C or E->F
-				distance += 1;
-			}
-			else {
-				distance += 2;
-			}
-			thisBase = (thisBase + 1) % 7;
-		}
-		else {
-			// Count downward mod 7
-			if (thisBase == 2 || thisBase == 5) {
-				// C->B or F->E
-				distance += 1;
-			}
-			else {
-				distance += 2;
-			}
-			// Can't use % here, since % isn't a euclidian mod!
-			if (thisBase == 0)
-				thisBase = 6;
-			else --thisBase;
-		}
+	int lowBase;
+	int lowOctave;
+	int highBase;
+	int highOctave;
+
+	if ((thisOctave < otherOctave) || 
+		(thisOctave == otherOctave && thisBase < otherBase)) {
+		// This name/octave is lower
+		lowBase = thisBase;
+		lowOctave = thisOctave;
+		highBase = otherBase;
+		highOctave = otherOctave;
+	}
+	else if (thisOctave == otherOctave && thisBase == otherBase) {
+		// Both names/octaves are the same
+		return 0;
+	} else if ((thisOctave == otherOctave && thisBase > otherBase) ||
+		(thisOctave > otherOctave)) {
+		// This name/octave is higher
+		lowBase = otherBase;
+		lowOctave = otherOctave;
+		highBase = thisBase;
+		highOctave = thisOctave;
 	}
 
-	return distance;
+	return ((highOctave - lowOctave) * 7) + (highBase - lowBase);
+}
+
+int Note::getRelativeDistance(const Note &other) const
+{
+	int thisDistance{ getAbsoluteDistance() };
+	int otherDistance{ other.getAbsoluteDistance() };
+	
+	if (thisDistance > otherDistance)
+		return thisDistance - otherDistance;
+	else
+		return otherDistance - thisDistance;
+}
+
+Note Note::getOtherNote(const Interval &interval, bool getHigherNote) const
+{
+	// TODO don't forget lower option!
+	int otherOctave{ octave };
+	int otherBase{ static_cast<int>(base) };
+	int otherOffset{ offset };
+
+	otherOctave += ((interval.getBasicInterval() - 1) / 7);
+	otherBase += ((interval.getBasicInterval() - 1) % 7);
+
+	otherOctave += otherBase / 7;
+	otherBase %= 7;
+
+	Note intermediate{ static_cast<BasicNote>(otherBase), 0, otherOctave };
+	otherOffset = getAbsoluteDistance() + interval.getSemitones() - intermediate.getAbsoluteDistance();
+
+	return Note(static_cast<BasicNote>(otherBase), otherOffset, otherOctave); // TODO test, test, test!
 }
 
 std::ostream& operator<<(std::ostream &os, const Note &note)
