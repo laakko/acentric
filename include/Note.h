@@ -36,9 +36,9 @@ public:
 	// TODO Perhaps these should actually be part of the Interval class
 	int getAbsoluteDistance() const; // Distance from A0; returns negative for negative-octave notes
 	int getBasicDistance(const Note &other) const;
-	int getRelativeDistance(const Note &other) const;
+	int getSemitoneDistance(const Note &other) const;
 
-	Note getOtherNote(const Interval &interval, bool invert = false) const;
+	Note getOtherNote(const Interval &interval, bool getLowerNote = false) const;
 	Interval getInterval(const Note &other) const; // TODO test!
 	//bool simplify(); // TODO implement e.g. E# -> F, Abb -> G. Return true if something changed
 };

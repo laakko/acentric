@@ -12,11 +12,11 @@ private:
 	int semitones;
 
 public:
-	Interval(int basicDistance = 0, int semitones = 0);
+	Interval(int basicDistance = 0, int semitones = 0); 
 	//Interval(std::string commonName); // TODO implement
 
 	//Interval getInversion() const; // TODO implement
-	int getbasicDistance() const { return basicDistance; }
+	int getBasicDistance() const { return basicDistance; }
 	int getSemitones() const { return semitones; }
 };
 

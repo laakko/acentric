@@ -15,7 +15,7 @@ std::ostream & operator<<(std::ostream & os, const Interval & interval)
 {
 	// Determine if the interval, unmodified, would be P or M
 	bool perfect{ false };
-	int basicDistance{ interval.getbasicDistance() };
+	int basicDistance{ interval.getBasicDistance() };
 
 	if (basicDistance % 7 == 0 || basicDistance % 7 == 3 || basicDistance % 7 == 4)
 		perfect = true;
@@ -46,7 +46,9 @@ std::ostream & operator<<(std::ostream & os, const Interval & interval)
 		naturalSemitones += 11;
 		break;
 	}
-
+	// The interval may dictate a different number of semitones than the "natural" M or P
+	// Find this number...If it's within 1 or 2 it may have a canonical name like m, d or A
+	// Otherwise display how many semitones away from the M or P the interval is
 	int offset{ interval.getSemitones() - naturalSemitones };
 
 	if ((offset < -2) || (offset == -2 && perfect)) {
@@ -71,7 +73,7 @@ std::ostream & operator<<(std::ostream & os, const Interval & interval)
 			os << "(P";
 		else
 			os << "(M";
-		os << "+" << offset << ")"; // TODO print P or M before the #
+		os << "+" << offset << ")";
 	}
 
 	os << basicDistance + 1;

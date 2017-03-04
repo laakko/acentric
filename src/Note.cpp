@@ -74,7 +74,7 @@ int Note::getBasicDistance(const Note &other) const
 	return ((highOctave - lowOctave) * 7) + (highBase - lowBase);
 }
 
-int Note::getRelativeDistance(const Note &other) const
+int Note::getSemitoneDistance(const Note &other) const
 {
 	int thisDistance{ getAbsoluteDistance() };
 	int otherDistance{ other.getAbsoluteDistance() };
@@ -85,21 +85,30 @@ int Note::getRelativeDistance(const Note &other) const
 		return otherDistance - thisDistance;
 }
 
-Note Note::getOtherNote(const Interval &interval, bool invert) const
+Note Note::getOtherNote(const Interval &interval, bool getLowerNote) const
 {
-	// TODO don't forget lower option!
 	int otherOctave{ octave };
 	int otherBase{ static_cast<int>(base) };
 	int otherOffset{ offset };
 
-	otherOctave += (interval.getbasicDistance() / 7);
-	otherBase += (interval.getbasicDistance() % 7);
+	if (!getLowerNote) {
+		otherOctave += (interval.getBasicDistance() / 7);
+		otherBase += (interval.getBasicDistance() % 7);
 
-	otherOctave += otherBase / 7;
-	otherBase %= 7;
+		otherOctave += otherBase / 7;
+		otherBase %= 7;
+	}
+	else {
+		otherOctave -= (interval.getBasicDistance() / 7);
+		otherBase -= (interval.getBasicDistance() % 7);
+		if (otherBase < 0) {
+			otherBase += 7;
+			otherOctave -= 1;
+		}
+	}
 
 	Note intermediate{ static_cast<BasicNote>(otherBase), 0, otherOctave };
-	otherOffset = getAbsoluteDistance() + interval.getSemitones() - intermediate.getAbsoluteDistance();
+	otherOffset = intermediate.getAbsoluteDistance() + interval.getSemitones() - getAbsoluteDistance();
 
 	return Note(static_cast<BasicNote>(otherBase), otherOffset, otherOctave); // TODO test, test, test!
 }
@@ -107,7 +116,7 @@ Note Note::getOtherNote(const Interval &interval, bool invert) const
 Interval Note::getInterval(const Note & other) const
 {
 	int basicDistance = getBasicDistance(other);
-	int semitones = getRelativeDistance(other);
+	int semitones = getSemitoneDistance(other);
 	return Interval(basicDistance, semitones);
 }
 
@@ -139,8 +148,6 @@ std::ostream& operator<<(std::ostream &os, const Note &note)
 	}
 
 	// Print sharps or flats
-	// TODO rewrite to allow more flexibility
-	// e.g. if offset is -7 print (b^7)
 	if (note.getOffset() < -2) {
 		os << "(b^" << note.getOffset() << ")";
 	}
@@ -151,7 +158,7 @@ std::ostream& operator<<(std::ostream &os, const Note &note)
 	else if (note.getOffset() == 1)
 		os << "#";
 	else if (note.getOffset() == 2)
-		os << "##"; // TODO should this be x instead? probably not
+		os << "##";
 	else if (note.getOffset() > 2) {
 		os << "(#^" << note.getOffset() << ")";
 	}
