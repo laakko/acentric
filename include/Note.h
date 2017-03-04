@@ -38,7 +38,7 @@ public:
 	int getBasicDistance(const Note &other) const;
 	int getRelativeDistance(const Note &other) const;
 
-	Note getOtherNote(const Interval &interval, bool getHigherNote = true) const;
+	Note getOtherNote(const Interval &interval, bool invert = false) const;
 	Interval getInterval(const Note &other) const; // TODO test!
 	//bool simplify(); // TODO implement e.g. E# -> F, Abb -> G. Return true if something changed
 };

@@ -3,7 +3,6 @@
 
 Note::Note(BasicNote base, int offset, int octave)
 {
-	// TODO validate input
 	this->base = base;
 	this->offset = offset;
 	this->octave = octave;
@@ -15,26 +14,25 @@ int Note::getAbsoluteDistance() const
 	distance += octave * 12;
 	distance += offset;
 
-	// TODO rewrite without cast?
-	switch (static_cast<int>(base)) {
-	case 0: // A
+	switch (base) {
+	case BasicNote::A:
 		break; // no need to add anything
-	case 1: // B
+	case BasicNote::B:
 		distance += 2;
 		break;
-	case 2: // C
+	case BasicNote::C:
 		distance += 3;
 		break;
-	case 3: // D
+	case BasicNote::D:
 		distance += 5;
 		break;
-	case 4: // E
+	case BasicNote::E:
 		distance += 7;
 		break;
-	case 5: // F
+	case BasicNote::F:
 		distance += 8;
 		break;
-	case 6: // G
+	case BasicNote::G:
 		distance += 10;
 		break;
 	}
@@ -87,7 +85,7 @@ int Note::getRelativeDistance(const Note &other) const
 		return otherDistance - thisDistance;
 }
 
-Note Note::getOtherNote(const Interval &interval, bool getHigherNote) const
+Note Note::getOtherNote(const Interval &interval, bool invert) const
 {
 	// TODO don't forget lower option!
 	int otherOctave{ octave };

@@ -9,7 +9,7 @@ int main() {
 	Note badNote = Note::Note(BasicNote::F, -3, 5);
 
 	Note first{ BasicNote::C, 0, 4 };
-	Note second{ BasicNote::G, -2, 6 };
+	Note second{ BasicNote::E, -1, 3 };
 
 	Interval myInterval = first.getInterval(second);
 

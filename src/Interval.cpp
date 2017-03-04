@@ -49,8 +49,13 @@ std::ostream & operator<<(std::ostream & os, const Interval & interval)
 
 	int offset{ interval.getSemitones() - naturalSemitones };
 
-	if ((offset < -2) || (offset == -2 && perfect))
-		os << "(b^" << offset << ")"; // TODO print P or M before the b
+	if ((offset < -2) || (offset == -2 && perfect)) {
+		if (perfect)
+			os << "(P";
+		else
+			os << "(M";
+		os << offset << ")";
+	}
 	else if ((offset == -2 && !perfect) || (offset == -1 && perfect))
 		os << "d";
 	else if (offset == -1 && !perfect)
@@ -61,8 +66,13 @@ std::ostream & operator<<(std::ostream & os, const Interval & interval)
 		os << "M";
 	else if (offset == 1)
 		os << "A";
-	else if (offset > 1)
-		os << "(#^" << offset << ")"; // TODO print P or M before the #
+	else if (offset > 1) {
+		if (perfect)
+			os << "(P";
+		else
+			os << "(M";
+		os << "+" << offset << ")"; // TODO print P or M before the #
+	}
 
 	os << basicDistance + 1;
 
