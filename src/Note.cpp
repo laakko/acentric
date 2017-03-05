@@ -8,6 +8,16 @@ Note::Note(BasicNote base, int offset, int octave)
 	this->octave = octave;
 }
 
+Note Note::operator+(Interval interval) const
+{
+	return getOtherNote(interval);
+}
+
+Note Note::operator-(Interval interval) const
+{
+	return getOtherNote(interval, true);
+}
+
 int Note::getAbsoluteDistance() const
 {
 	int distance{ 0 };
@@ -95,20 +105,28 @@ Note Note::getOtherNote(const Interval &interval, bool getLowerNote) const
 		otherOctave += (interval.getBasicDistance() / 7);
 		otherBase += (interval.getBasicDistance() % 7);
 
+		// normalize otherBase to be within 0-6, adjust octave accordingly
 		otherOctave += otherBase / 7;
 		otherBase %= 7;
+
+		Note intermediate{ static_cast<BasicNote>(otherBase), 0, otherOctave };
+		otherOffset = intermediate.getAbsoluteDistance() - interval.getSemitones() - getAbsoluteDistance();
 	}
 	else {
 		otherOctave -= (interval.getBasicDistance() / 7);
 		otherBase -= (interval.getBasicDistance() % 7);
+
+		// normalize otherBase to be within 0-6, adjust octave accordingly
+		// this works the same as above but without fancy modulus math
+		// (otherBase at this point can be no lower than -6)
 		if (otherBase < 0) {
 			otherBase += 7;
 			otherOctave -= 1;
 		}
-	}
 
-	Note intermediate{ static_cast<BasicNote>(otherBase), 0, otherOctave };
-	otherOffset = intermediate.getAbsoluteDistance() + interval.getSemitones() - getAbsoluteDistance();
+		Note intermediate{ static_cast<BasicNote>(otherBase), 0, otherOctave };
+		otherOffset = getAbsoluteDistance() - interval.getSemitones() - intermediate.getAbsoluteDistance();
+	}
 
 	return Note(static_cast<BasicNote>(otherBase), otherOffset, otherOctave); // TODO test, test, test!
 }

@@ -3,7 +3,7 @@
 Interval::Interval(int basicDistance, int semitones)
 {
 	if (basicDistance < 0)
-		throw "bad basicDistance parameter in Interval ctor: " + std::to_string(basicDistance);
+		throw "bad basicInterval parameter in Interval ctor: " + std::to_string(basicDistance);
 	this->basicDistance = basicDistance;
 
 	if (semitones < 0)

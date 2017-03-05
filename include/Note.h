@@ -2,11 +2,10 @@
 #ifndef NOTE_H
 #define NOTE_H
 
-#include <string>
 #include <iostream>
+#include <string>
 #include "BasicNote.h"
 #include "Interval.h"
-class Interval;
 
 class Note{
 
@@ -20,7 +19,9 @@ public:
 	//Note(std::string textNote); // TODO implement
 
 	//Note operator+(int semitones) const; // TODO implement (implicit simplify)
+	Note operator+(Interval interval) const;
 	//Note operator-(int semitones) const; // TODO implement (implicit simplify)
+	Note operator-(Interval interval) const;
 	bool operator>(const Note &other) const { return getAbsoluteDistance() > other.getAbsoluteDistance(); }
 	bool operator<(const Note &other) const { return getAbsoluteDistance() < other.getAbsoluteDistance(); }
 	// TODO compare values, not names...but is this too confusing?

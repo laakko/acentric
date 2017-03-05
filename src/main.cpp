@@ -5,10 +5,12 @@
 #include "Interval.h"
 
 int main() {
-	Interval interOne{ 13, 22 };
-	Note noteOne{ BasicNote::D, 2, 0 };
-	Note calculated{ noteOne.getOtherNote(interOne, true) };
-	std::cout << "Lower other note of " << noteOne << " with interval " << interOne << " is " << calculated << std::endl;
+	Interval interOne{ 2, 4 };
+	Note noteOne{ BasicNote::C, 0, 4 };
+	Note calculated{ noteOne + interOne };
+	Note calculated2{ noteOne - interOne };
+	std::cout << noteOne << " with added interval " << interOne << " is " << calculated << std::endl;
+	std::cout << noteOne << " with subtracted interval " << interOne << " is " << calculated2 << std::endl;
 
 	int i;
 	std::cin >> i;
