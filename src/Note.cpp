@@ -128,7 +128,7 @@ Note Note::getOtherNote(const Interval &interval, bool getLowerNote) const
 		otherOffset = getAbsoluteDistance() - interval.getSemitones() - intermediate.getAbsoluteDistance();
 	}
 
-	return Note(static_cast<BasicNote>(otherBase), otherOffset, otherOctave); // TODO test, test, test!
+	return Note(static_cast<BasicNote>(otherBase), otherOffset, otherOctave);
 }
 
 Interval Note::getInterval(const Note & other) const
@@ -137,6 +137,34 @@ Interval Note::getInterval(const Note & other) const
 	int semitones = getSemitoneDistance(other);
 	return Interval(basicDistance, semitones);
 }
+
+// TODO maybe "simple" isn't possible to determine outside the context of a scale!
+//bool Note::isSimple() const
+//{
+//	switch (base) {
+//	case BasicNote::B:
+//		if (offset >= 1)
+//			return false;
+//		break;
+//	case BasicNote::C:
+//		if (offset <= -1)
+//			return false;
+//		break;
+//	case BasicNote::E:
+//		if (offset >= 1)
+//			return false;
+//		break;
+//	case BasicNote::F:
+//		if (offset <= -1)
+//			return false;
+//		break;
+//	default:
+//		if (offset < -1 || offset > 1)
+//			return false;
+//		break;
+//	}
+//	return true;
+//}
 
 std::ostream& operator<<(std::ostream &os, const Note &note)
 {

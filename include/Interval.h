@@ -24,6 +24,8 @@ public:
 	int getBasicInterval() const { return basicDistance + 1; }
 	int getBasicDistance() const { return basicDistance; }
 	int getSemitones() const { return semitones; }
+
+	// TODO add chromatic intervals, e.g. C4-F4 = i5
 };
 
 std::ostream& operator<<(std::ostream &os, const Interval &interval);

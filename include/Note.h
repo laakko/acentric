@@ -24,11 +24,10 @@ public:
 	Note operator-(Interval interval) const;
 	bool operator>(const Note &other) const { return getAbsoluteDistance() > other.getAbsoluteDistance(); }
 	bool operator<(const Note &other) const { return getAbsoluteDistance() < other.getAbsoluteDistance(); }
-	// TODO compare values, not names...but is this too confusing?
-	// maybe use == for name equality (if it's ever even needed...) and isEnharmonic(const Note &other) const for absolute distance
-	bool operator==(const Note &other) const { return getAbsoluteDistance() == other.getAbsoluteDistance(); }
 	bool operator<=(const Note &other) const { return getAbsoluteDistance() <= other.getAbsoluteDistance(); }
 	bool operator>=(const Note &other) const { return getAbsoluteDistance() >= other.getAbsoluteDistance(); }
+
+	bool isEnharmonic(const Note &other) const { return getAbsoluteDistance() == other.getAbsoluteDistance(); }
 
 	BasicNote getBase() const { return base; }
 	int getOffset() const { return offset; }
@@ -40,8 +39,11 @@ public:
 	int getSemitoneDistance(const Note &other) const;
 
 	Note getOtherNote(const Interval &interval, bool getLowerNote = false) const;
-	Interval getInterval(const Note &other) const; // TODO test!
-	//bool simplify(); // TODO implement e.g. E# -> F, Abb -> G. Return true if something changed
+	Interval getInterval(const Note &other) const;
+	
+	// TODO maybe "simple" isn't possible to determine outside the context of a scale!
+	//bool isSimple() const;
+	//Note getSimplified() const; // TODO implement e.g. E# -> F, Abb -> G. Return true if something changed
 };
 
 std::ostream& operator<<(std::ostream &os, const Note &note);
