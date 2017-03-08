@@ -12,9 +12,6 @@ int main() {
 	std::cout << noteOne << " with added interval " << interOne << " is " << calculated << std::endl;
 	std::cout << noteOne << " with subtracted interval " << interOne << " is " << calculated2 << std::endl;*/
 
-	Note noteTwo{ BasicNote::A, -2, 6 };
-	std::cout << noteTwo.isSimple() << std::endl;
-
 	int i;
 	std::cin >> i;
     exit(0);
