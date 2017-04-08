@@ -1,11 +1,31 @@
+#include <cmath>
+#include <regex>
 #include "Note.h"
 #include "BasicNote.h"
+#include <iostream>
 
 Note::Note(BasicNote base, int offset, int octave)
 {
 	this->base = base;
 	this->offset = offset;
 	this->octave = octave;
+}
+
+Note::Note(const std::string textNote)
+{
+	// Validate input; this allows e.g. C####, A(b^0) even though these forms are never printed out
+	std::regex validNote{ "^[ABCDEFG](#*|b*|\([b#]\^[0-9]+\))?((-[0-9]+)|[0-9]*)$" };
+	if (!std::regex_match(textNote, validNote)) {
+		throw "Invalid string passed to Note ctor";
+	}
+
+	// character A -> number 65 -> number 0 -> BasicNote::A
+	// TODO there's probably a better, less hackish way to do this
+	this->base = static_cast<BasicNote>(static_cast<int>(textNote[0]) - 65);
+
+	// TODO finish parsing
+	this->offset = 0;
+	this->octave = 4;
 }
 
 Note Note::operator+(Interval interval) const
@@ -196,7 +216,7 @@ std::ostream& operator<<(std::ostream &os, const Note &note)
 
 	// Print sharps or flats
 	if (note.getOffset() < -2) {
-		os << "(b^" << note.getOffset() << ")";
+		os << "(b^" << std::abs(note.getOffset()) << ")";
 	}
 	else if (note.getOffset() == -2)
 		os << "bb";

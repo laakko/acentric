@@ -16,7 +16,7 @@ private:
 
 public:
 	Note(BasicNote base = BasicNote::A, int offset = 0, int octave = 4);
-	//Note(std::string textNote); // TODO implement
+	Note(const std::string textNote); // TODO implement
 
 	//Note operator+(int semitones) const; // TODO implement (implicit simplify)
 	Note operator+(Interval interval) const;

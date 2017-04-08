@@ -25,11 +25,10 @@ public:
 
 	Note getBase() const { return base; };
 
-	// TODO Only relevant for diatonic scales
-	DiatonicScale getRelative() const;
-	DiatonicScale getParallel() const;
+	// TODO ...do I even need these functions? how robust do I want this library to be?
+	//DiatonicScale getRelative() const;
+	//DiatonicScale getParallel() const;
 	
-	bool isDiatonic() const;
 	bool isInScale(Note &note) const;
 	Note simplify(Note &note) const;
 
@@ -37,4 +36,4 @@ public:
 
 std::ostream& operator<<(std::ostream &os, const DiatonicScale &scale);
 
-#endif //DIATONIC_SCALE_H	
+#endif //DIATONIC_SCALE_H
