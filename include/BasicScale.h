@@ -8,12 +8,12 @@ enum class BasicScale {
 	Minor, // i.e. natural minor
 	// MelodicMinor, // TODO figure out how to deal with this one
 	HarmonicMinor,
-	Ionian,
+	Ionian, // same as Major
 	Dorian,
 	Phrygian,
 	Lydian,
 	Mixolydian,
-	Aeolian,
+	Aeolian, // same as Minor
 	Locrian
 };
 

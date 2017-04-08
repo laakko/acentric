@@ -110,7 +110,8 @@ Note Note::getOtherNote(const Interval &interval, bool getLowerNote) const
 		otherBase %= 7;
 
 		Note intermediate{ static_cast<BasicNote>(otherBase), 0, otherOctave };
-		otherOffset = intermediate.getAbsoluteDistance() - interval.getSemitones() - getAbsoluteDistance();
+		//otherOffset = intermediate.getAbsoluteDistance() - interval.getSemitones() - getAbsoluteDistance();
+		otherOffset = getAbsoluteDistance() + interval.getSemitones() - intermediate.getAbsoluteDistance();
 	}
 	else {
 		otherOctave -= (interval.getBasicDistance() / 7);
