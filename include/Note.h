@@ -14,9 +14,11 @@ private:
 	int offset;
 	int octave;
 
+	int parseOctave(const std::string & octaveStr);
+
 public:
 	Note(BasicNote base = BasicNote::A, int offset = 0, int octave = 4);
-	Note(const std::string textNote); // TODO implement
+	Note(const std::string & textNote); // TODO complete; also, it chokes when given "" as input--fix
 
 	//Note operator+(int semitones) const; // TODO implement (implicit simplify)
 	Note operator+(Interval interval) const;

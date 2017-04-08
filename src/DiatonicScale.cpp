@@ -31,7 +31,7 @@ std::ostream & operator<<(std::ostream & os, const DiatonicScale & scale)
 {
 	os << scale.getBase();
 	for (auto &note : scale.getDegrees()) {
-		os << " " << note;
+		os << " " << note; // TODO don't print octave (should be quick fix)
 	}
 
 	return os;

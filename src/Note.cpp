@@ -11,21 +11,62 @@ Note::Note(BasicNote base, int offset, int octave)
 	this->octave = octave;
 }
 
-Note::Note(const std::string textNote)
+Note::Note(const std::string & textNote)
 {
 	// Validate input; this allows e.g. C####, A(b^0) even though these forms are never printed out
-	std::regex validNote{ "^[ABCDEFG](#*|b*|\([b#]\^[0-9]+\))?((-[0-9]+)|[0-9]*)$" };
+	std::regex validNote{ R"REGEX(^[ABCDEFG]([#b]*|\([b#]\^[0-9]+\))?((-[0-9]+)|[0-9]*)$)REGEX" };
+	
 	if (!std::regex_match(textNote, validNote)) {
 		throw "Invalid string passed to Note ctor";
 	}
 
+	// defaults, which will get overwritten based on input
+	this->base = BasicNote::A;
+	this->offset = 0;
+	this->octave = 4;
+
 	// character A -> number 65 -> number 0 -> BasicNote::A
 	// TODO there's probably a better, less hackish way to do this
 	this->base = static_cast<BasicNote>(static_cast<int>(textNote[0]) - 65);
+	if (textNote.size() == 1)
+		return;
 
 	// TODO finish parsing
-	this->offset = 0;
-	this->octave = 4;
+	std::regex numbers{ "-?[0-9]+" };
+	if (std::regex_match(textNote.substr(1), numbers)) {
+		// Found numbers representing an octave
+		this->octave = std::stoi(textNote.substr(1));
+	}
+	else if (textNote[1] == '#' || textNote[1] == 'b') {
+		// Found offset with #s and/or bs
+		// Adjust offset until no #s and bs are left
+		int i = 1;
+		while (textNote[i] == '#' || textNote[i] == 'b') {
+			if (textNote[i] == '#')
+				++this->offset;
+			if (textNote[i] == 'b')
+				--this->offset;
+			++i;
+		}
+		// #s and bs are parsed; finish by getting the octave, if applicable
+		if (textNote.size() > i)
+			this->octave = std::stoi(textNote.substr(i));
+	}
+	else if (textNote[1] == '(') {
+		// Found offset with parenthesis notation
+		int endParen = textNote.find(')');
+		int offset = std::stoi(textNote.substr(4, endParen - 4));
+		if (textNote[2] == '#')
+			this->offset = offset;
+		if (textNote[2] == 'b')
+			this->offset = -offset;
+
+		// Get octave
+		if (textNote.size() > endParen + 1)
+			this->octave = std::stoi(textNote.substr(endParen + 1));
+	}
+
+
 }
 
 Note Note::operator+(Interval interval) const

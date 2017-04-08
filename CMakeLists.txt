@@ -10,9 +10,9 @@ add_executable (main
 	include/Note.h
 	include/Interval.h
 	include/BasicScale.h
-	include/Scale.h
+	include/DiatonicScale.h
 	src/Note.cpp
 	src/Interval.cpp
-	src/Scale.cpp
+	src/DiatonicScale.cpp
 	src/main.cpp
 )
