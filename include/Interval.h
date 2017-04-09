@@ -18,7 +18,7 @@ public:
 	// Consequently, input to the ctor is off by one.
 	// I.e. Interval(3, 4) would generate d4, *not* M3.
 	Interval(int basicDistance = 0, int semitones = 0);
-	//Interval(std::string commonName); // TODO implement
+	Interval(std::string commonName); // TODO finish implementing
 
 	//Interval getInversion() const; // TODO implement
 	int getBasicInterval() const { return basicDistance + 1; }

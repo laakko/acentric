@@ -14,15 +14,11 @@ private:
 	int offset;
 	int octave;
 
-	int parseOctave(const std::string & octaveStr);
-
 public:
 	Note(BasicNote base = BasicNote::A, int offset = 0, int octave = 4);
-	Note(const std::string & textNote); // TODO complete; also, it chokes when given "" as input--fix
+	Note(const std::string & textNote); // TODO clean up, it's really ugly
 
-	//Note operator+(int semitones) const; // TODO implement (implicit simplify)
 	Note operator+(Interval interval) const;
-	//Note operator-(int semitones) const; // TODO implement (implicit simplify)
 	Note operator-(Interval interval) const;
 	bool operator>(const Note &other) const { return getAbsoluteDistance() > other.getAbsoluteDistance(); }
 	bool operator<(const Note &other) const { return getAbsoluteDistance() < other.getAbsoluteDistance(); }
@@ -42,10 +38,7 @@ public:
 
 	Note getOtherNote(const Interval &interval, bool getLowerNote = false) const;
 	Interval getInterval(const Note &other) const;
-	
-	// TODO maybe "simple" isn't possible to determine outside the context of a scale!
-	//bool isSimple() const;
-	//Note getSimplified() const; // TODO implement e.g. E# -> F, Abb -> G. Return true if something changed
+
 };
 
 std::ostream& operator<<(std::ostream &os, const Note &note);

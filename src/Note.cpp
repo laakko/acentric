@@ -2,7 +2,6 @@
 #include <regex>
 #include "Note.h"
 #include "BasicNote.h"
-#include <iostream>
 
 Note::Note(BasicNote base, int offset, int octave)
 {
@@ -199,34 +198,6 @@ Interval Note::getInterval(const Note & other) const
 	int semitones = getSemitoneDistance(other);
 	return Interval(basicDistance, semitones);
 }
-
-// TODO maybe "simple" isn't possible to determine outside the context of a scale!
-//bool Note::isSimple() const
-//{
-//	switch (base) {
-//	case BasicNote::B:
-//		if (offset >= 1)
-//			return false;
-//		break;
-//	case BasicNote::C:
-//		if (offset <= -1)
-//			return false;
-//		break;
-//	case BasicNote::E:
-//		if (offset >= 1)
-//			return false;
-//		break;
-//	case BasicNote::F:
-//		if (offset <= -1)
-//			return false;
-//		break;
-//	default:
-//		if (offset < -1 || offset > 1)
-//			return false;
-//		break;
-//	}
-//	return true;
-//}
 
 std::ostream& operator<<(std::ostream &os, const Note &note)
 {
