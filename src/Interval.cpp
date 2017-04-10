@@ -107,6 +107,12 @@ Interval::Interval(std::string commonName)
 		throw "Invalid interval semitones calculated in Interval ctor (negative value)";
 }
 
+std::vector<Interval> Interval::makeIntervalVector(std::string intervals)
+{
+	// TODO implement; input should be in the form of e.g. "m2, M3, P4, P5"
+	return std::vector<Interval>();
+}
+
 std::ostream & operator<<(std::ostream & os, const Interval & interval)
 {
 	// Determine if the interval, unmodified, would be P or M

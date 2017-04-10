@@ -5,6 +5,7 @@
 #include "Note.h"
 #include "Interval.h"
 #include "DiatonicScale.h"
+#include "BasicScale.h"
 
 int main() {
 	//Note scaleBase{ Note::Note("Bb") };
@@ -20,9 +21,12 @@ int main() {
 
 	//std::cout << cMajor << std::endl;
 
-	Note wut{ "C4" };
+	/*Note wut{ "C4" };
 	Interval wha{ "A13" };
-	std::cout << wut + wha << std::endl;
+	std::cout << wut + wha << std::endl;*/
+
+	DiatonicScale cMinor{ Note::Note("C"), BasicScale::Aeolian };
+	std::cout << cMinor << std::endl;
 
 	int i;
 	std::cin >> i;

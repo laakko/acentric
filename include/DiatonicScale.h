@@ -20,7 +20,7 @@ public:
 	// TODO explain/document this better
 	DiatonicScale(Note base, std::vector<Interval> degrees);
 	DiatonicScale(Note base, std::vector<Note> degrees); // ignore octave designation
-	DiatonicScale(Note base, BasicScale scale);
+	DiatonicScale(Note base, BasicScale scale); // TODO finish implementing, dangerous to use right now
 	std::vector<Note> getDegrees() const;
 
 	Note getBase() const { return base; };
