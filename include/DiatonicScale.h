@@ -12,6 +12,7 @@ class DiatonicScale {
 private:
 	Note base;
 	std::vector<Interval> degrees;
+	//bool properOrder(std::vector<Interval> degrees); // TODO should I use this to validate BasicScale-based ctor strings?
 
 public:
 	// The degrees vector must include six Intervals in strictly increasing order, with distances 1-6 (i.e. basic intervals 2-7)

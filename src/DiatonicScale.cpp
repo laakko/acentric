@@ -21,20 +21,37 @@ DiatonicScale::DiatonicScale(Note base, BasicScale scale)
 {
 	this->base = base;
 	
+	//TODO should I delegate to the above constructor to validate the degree vectors generated here?
+	//TODO alphabetical order, or musical order? right now it's somewhat alphabetical
 	switch (scale) {
 	case BasicScale::Aeolian:
-		/*degrees.push_back(Interval::Interval("M2"));
-		degrees.push_back(Interval::Interval("m3"));
-		degrees.push_back(Interval::Interval("P4"));
-		degrees.push_back(Interval::Interval("P5"));
-		degrees.push_back(Interval::Interval("m6"));
-		degrees.push_back(Interval::Interval("m7"));*/
+	case BasicScale::Minor:
 		degrees = Interval::makeIntervalVector("M2 m3 P4 P5 m6 m7");
 		break;
 
 	case BasicScale::Dorian:
-		// TODO finish adding scales, but use Interval::makeIntervalVector instead
-		// This will also be useful for chords later on
+		degrees = Interval::makeIntervalVector("M2 m3 P4 P5 M6 m7");
+		break;
+
+	case BasicScale::Ionian:
+	case BasicScale::Major:
+		degrees = Interval::makeIntervalVector("M2 M3 P4 P5 M6 M7");
+		break;
+
+	case BasicScale::Locrian:
+		degrees = Interval::makeIntervalVector("m2 m3 P4 d5 m6 m7");
+		break;
+
+	case BasicScale::Lydian:
+		degrees = Interval::makeIntervalVector("M2 M3 A4 P5 M6 M7");
+		break;
+
+	case BasicScale::Mixolydian:
+		degrees = Interval::makeIntervalVector("M2 M3 P4 P5 M6 m7");
+		break;
+
+	case BasicScale::Phrygian:
+		degrees = Interval::makeIntervalVector("m2 m3 P4 P5 m6 m7");
 		break;
 	}
 }
