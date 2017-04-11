@@ -28,6 +28,8 @@ int main() {
 	DiatonicScale cMinor{ Note::Note("C"), BasicScale::Aeolian };
 	std::cout << cMinor << std::endl;
 
+	//Interval::makeIntervalVector("m2, M3 P4...P5");
+
 	int i;
 	std::cin >> i;
     exit(0);

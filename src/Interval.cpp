@@ -39,7 +39,7 @@ Interval::Interval(std::string commonName)
 	else {
 		// Interval is in parenthesis form, e.g. (P+5)4
 		intervalClass = commonName[1];
-		int endParen = commonName.find(')');
+		std::size_t endParen = commonName.find(')'); // TODO kludgy, cleanup
 
 		if (commonName[2] == '+')
 			// don't pass the plus sign (+) to stoi...skip over it
@@ -110,7 +110,16 @@ Interval::Interval(std::string commonName)
 std::vector<Interval> Interval::makeIntervalVector(std::string intervals)
 {
 	// TODO implement; input should be in the form of e.g. "m2, M3, P4, P5"
-	return std::vector<Interval>();
+	std::vector<Interval> rtnIntervals;
+	std::smatch token;
+	std::regex validInterval{ R"REGEX(\([PM][+-][0-9]+\)[1-9][0-9]*|[PmMdA][1-9][0-9]*)REGEX" }; // TODO get rid of duplication with ctor
+
+	while (std::regex_search(intervals, token, validInterval)) {
+		rtnIntervals.push_back(Interval::Interval(token.str()));
+		intervals = token.suffix().str();
+	}
+
+	return rtnIntervals;
 }
 
 std::ostream & operator<<(std::ostream & os, const Interval & interval)

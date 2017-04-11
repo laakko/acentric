@@ -23,17 +23,19 @@ DiatonicScale::DiatonicScale(Note base, BasicScale scale)
 	
 	switch (scale) {
 	case BasicScale::Aeolian:
-		degrees.push_back(Interval::Interval("M2"));
+		/*degrees.push_back(Interval::Interval("M2"));
 		degrees.push_back(Interval::Interval("m3"));
 		degrees.push_back(Interval::Interval("P4"));
 		degrees.push_back(Interval::Interval("P5"));
 		degrees.push_back(Interval::Interval("m6"));
-		degrees.push_back(Interval::Interval("m7"));
+		degrees.push_back(Interval::Interval("m7"));*/
+		degrees = Interval::makeIntervalVector("M2 m3 P4 P5 m6 m7");
 		break;
 
 	case BasicScale::Dorian:
 		// TODO finish adding scales, but use Interval::makeIntervalVector instead
 		// This will also be useful for chords later on
+		break;
 	}
 }
 
