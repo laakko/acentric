@@ -3,7 +3,7 @@ add_compile_options(-std=c++14)
 
 project (music-theory)
 
-include_directories(include)
+include_directories(3rd-party include)
 
 add_executable (main
 	include/BasicNote.h
@@ -15,4 +15,15 @@ add_executable (main
 	src/Interval.cpp
 	src/DiatonicScale.cpp
 	src/main.cpp
+)
+
+add_executable (run-tests
+	3rd-party/doctest.h
+	include/BasicNote.h
+	include/Note.h
+	include/Interval.h
+	src/Note.cpp
+	src/NoteTest.cpp
+	src/Interval.cpp
+	src/MainTest.cpp
 )
