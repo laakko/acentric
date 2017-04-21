@@ -11,6 +11,7 @@ add_executable (main
 	include/Interval.h
 	include/BasicScale.h
 	include/DiatonicScale.h
+	
 	src/Note.cpp
 	src/Interval.cpp
 	src/DiatonicScale.cpp
@@ -19,11 +20,14 @@ add_executable (main
 
 add_executable (run-tests
 	3rd-party/doctest.h
+	
 	include/BasicNote.h
 	include/Note.h
 	include/Interval.h
+	
 	src/Note.cpp
-	src/NoteTest.cpp
 	src/Interval.cpp
-	src/MainTest.cpp
+	
+	src/tests/NoteTest.cpp
+	src/tests/MainTest.cpp
 )
