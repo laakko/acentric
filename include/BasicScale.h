@@ -2,6 +2,7 @@
 #ifndef BASICSCALE_H
 #define BASICSCALE_H
 
+/*! The BasicScale enum provides commonly-recognized diatonic scales for use as input to the DiatonicScale constructor. */
 enum class BasicScale {
 	Chromatic,
 	Major,

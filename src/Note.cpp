@@ -48,6 +48,7 @@ Note::Note(const std::string & textNote)
 			++i;
 		}
 		// #s and bs are parsed; finish by getting the octave, if applicable
+		// TODO set to 4 by default
 		if (textNote.size() > i)
 			this->octave = std::stoi(textNote.substr(i));
 	}
@@ -61,6 +62,7 @@ Note::Note(const std::string & textNote)
 			this->offset = -offset;
 
 		// Get octave
+		// TODO set to 4 by default
 		if (textNote.size() > endParen + 1)
 			this->octave = std::stoi(textNote.substr(endParen + 1));
 	}
