@@ -25,7 +25,7 @@ int main() {
 	Interval wha{ "A13" };
 	std::cout << wut + wha << std::endl;*/
 
-	DiatonicScale csLocrian{ Note::Note("C#"), BasicScale::Locrian };
+	DiatonicScale csLocrian{ Note("C#"), BasicScale::Locrian };
 	std::cout << csLocrian << std::endl;
 
 	//Interval::makeIntervalVector("m2, M3 P4...P5");

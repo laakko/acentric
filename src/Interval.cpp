@@ -115,7 +115,7 @@ std::vector<Interval> Interval::makeIntervalVector(std::string intervals)
 	std::regex validInterval{ R"REGEX(\([PM][+-][0-9]+\)[1-9][0-9]*|[PmMdA][1-9][0-9]*)REGEX" }; // TODO get rid of duplication with ctor
 
 	while (std::regex_search(intervals, token, validInterval)) {
-		rtnIntervals.push_back(Interval::Interval(token.str()));
+		rtnIntervals.push_back(Interval(token.str()));
 		intervals = token.suffix().str();
 	}
 
