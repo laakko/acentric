@@ -87,7 +87,8 @@ public:
 	/*! Returns the base of the note as a BasicNote. */
 	BasicNote getBase() const { return base; }
 
-	/*! Returns the sharp/flat offset of the note. For example, an offset of 1 represents a single sharp, and an offset of -1 represents a single flat. */
+	/*! Returns the sharp/flat offset of the note. A positive number indicates the number of sharps, and a negative number indicates the number of flats.
+	For example, an offset of 1 represents a single sharp, and an offset of -1 represents a single flat. */
 	int getOffset() const { return offset; }
 
 	/*! Returns the octave of the note. Octaves are based on [scientific pitch notation](https://en.wikipedia.org/wiki/Scientific_pitch_notation). */
