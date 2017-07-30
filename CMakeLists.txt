@@ -11,10 +11,13 @@ add_executable (main
 	include/Interval.h
 	include/BasicScale.h
 	include/DiatonicScale.h
+	include/Chord.h
+	include/BasicChord.h
 	
 	src/Note.cpp
 	src/Interval.cpp
 	src/DiatonicScale.cpp
+	src/Chord.cpp
 	src/main.cpp
 )
 
