@@ -12,16 +12,24 @@
 class Chord {
 
 private:
-	BasicNote base;
-	std::vector<Interval> degrees; // TODO rename...maybe "pitches"?
+	Note root;
+	std::vector<Interval> pitches;
 
 public:
-	Chord(BasicNote base, BasicChord chord);
-	Chord(BasicNote base, std::vector<Interval> degrees);
+	Chord(Note root, BasicChord chord);
+	Chord(Note root, std::vector<Interval> pitches);
+
+	Note getBase() const { return root; }
+	std::vector<Interval> getPitches() const { return pitches; }
 
 	void insertPitch(Interval pitchToInsert);
-	void setBase(Note newBase);
+	void removePitch(Interval pitchToRemove);
+	void setRoot(Note newRoot);
+
+	// TODO add functionality to get inversions
 
 };
+
+std::ostream& operator<<(std::ostream &os, const Chord &chord);
 
 #endif // CHORD_H
