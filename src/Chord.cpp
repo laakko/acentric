@@ -59,8 +59,35 @@ Chord::Chord(Note root, BasicChord chord) :
 	}
 }
 
-Chord::Chord(Note root, std::vector<Interval> pitches)
+Chord::Chord(Note root, std::vector<Interval> pitches) : // TODO test
+	root(root)
 {
+	// Validate given pitches; they should be in strictly increasing order from the root (no duplicates)
+	if (pitches.size() == 0) throw "Empty Interval vector passed to Chord ctor";
+
+	int prevDistance = pitches.at(0).getBasicDistance();
+	if (prevDistance == 0) throw "P1 or d2 in Interval vector passed to Chord ctor (duplicates root note)";
+
+	for (int i = 1; i < pitches.size(); ++i) {
+		if (!(pitches.at(i).getBasicDistance() > prevDistance)) throw "Non-increasing Interval vector passed to Chord ctor";
+		prevDistance = pitches.at(i).getBasicDistance();
+	}
+	this->pitches = pitches;
+}
+
+void Chord::insertPitch(Interval pitchToInsert) // TODO implement
+{
+	//for (int i = 0; i < pitches.size(); ++i) {
+	//	if (pitchToInsert.getBasicDistance() < pitches.at(i).getBasicDistance()) {
+	//		continue;
+	//	}
+	//	else if (pitchToInsert.getBasicDistance() == pitches.at(i).getBasicDistance()) {
+	//		throw "Attempted to insert duplicate pitch into a Chord"; // TODO maybe just fail silently instead of throwing?
+	//	}
+	//	else if (pitchToInsert.getBasicDistance() > pitches.at(i).getBasicDistance()){
+	//		pitches.insert(pitchToInsert);
+	//	}
+	//}
 }
 
 void Chord::setRoot(Note newRoot)
