@@ -9,10 +9,11 @@
 #ifdef  YY_DECL
 # undef YY_DECL
 #endif
-#define YY_DECL                                 \
-    int yy::MusicLexer::lex(                       \
-            yy::MusicParser::semantic_type* yylval,  \
-            yy::MusicParser::location_type* yylloc)
+//#define YY_DECL                                 \
+    yy::MusicParser::symbol_type yy::MusicLexer::lex(        \
+                    yy::MusicParser::semantic_type* yylval,  \
+                    yy::MusicParser::location_type* yylloc)
+#define YY_DECL yy::MusicParser::symbol_type yy::MusicLexer::lex()
 
 
 namespace yy
@@ -28,8 +29,9 @@ namespace yy
     public:
         explicit MusicLexer(std::istream* in=0, std::ostream* out=0);
 
-        int lex(MusicParser::semantic_type* yylval,
-                MusicParser::location_type* yylloc);
+        //yy::MusicParser::symbol_type lex(MusicParser::semantic_type* yylval,
+        //                                 MusicParser::location_type* yylloc);
+        yy::MusicParser::symbol_type lex();
     };
 }
 

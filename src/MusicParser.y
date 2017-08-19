@@ -8,6 +8,8 @@
 %parse-param  {yy::MusicLexer* lexer} {MusicParserResult* cb}
 %locations
 
+%define api.token.constructor
+
 /* increase usefulness of error messages */
 %define parse.error verbose
 

@@ -13,21 +13,24 @@
 
     #define YY_STRING                  std::string(yytext, yyleng)
 
-    #define YY_USER_ACTION          yylloc->columns(yyleng);
+    static yy::location loc;
+
+    #define YY_USER_ACTION loc.columns(yyleng);
 %}
 
 %%
 
  /* code to be executed at every yylex() call */
 %{
-    yylloc->step();
+    loc.step();
 %}
 
-[1-9][0-9]*                 MAKE_TOKEN(POSINT, int, std::atoi(yytext));
+[1-9][0-9]*                 return yy::MusicParser::make_POSINT(std::atoi(yytext), loc);
 
-\n                          yylloc->lines(1);
-[ \t]                       { }
+[\n]+                       { loc.lines(yyleng); loc.step(); }
+[ \t]                       { loc.step(); }
 .                           { }
+<<EOF>>                     return yy::MusicParser::make_END(loc);
 
 %%
 
