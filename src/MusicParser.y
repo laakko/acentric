@@ -18,7 +18,6 @@
 %define api.token.prefix {T_}
 
 %token                  END     0   "end of file"
-%token <std::string>    NAME
 %token <double>         NUM
 
 %start statement
@@ -62,7 +61,7 @@
     /* deliver output */
 
 statement    : %empty           { /* allow empty (or pure comment) lines */ }
-             | NUM              { cb->noteResult = Note{}; }
+             | NUM              { cb->lolWut = $1; }
              ;
 
 %%
