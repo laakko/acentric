@@ -4,14 +4,20 @@
 #include "MusicParser.hxx"
 #include "MusicLexer.h"
 
-int MusicReader::parseInt(const std::string& expr)
-{
+MusicParserResult MusicReader::parse(const std::string& expr){
     MusicParserResult out;
     std::istringstream in(expr);
     yy::MusicLexer lexer(&in);
     yy::MusicParser parser(&lexer, &out);
+    parser.parse(); // TODO error check
+    return out;
+}
 
-    int result = parser.parse();
+int MusicReader::parseInt(const std::string& expr)
+{
+    return MusicReader::parse(expr).lolWut;
+}
 
-    return out.lolWut;
+Note MusicReader::parseNote(const std::string& expr){
+    return MusicReader::parse(expr).noteResult;
 }

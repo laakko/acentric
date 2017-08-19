@@ -18,11 +18,8 @@
 %define api.token.prefix {T_}
 
 %token                  END     0   "end of file"
-
 %token <std::string>    NAME
 %token <double>         NUM
-%token <int>            SIGN
-                        REL
 
 %start statement
 
@@ -32,6 +29,8 @@
     #include <string>
 
     #include "location.hh"
+    #include "Note.h"
+    #include "BasicNote.h"
 
     namespace yy {
         class MusicLexer; // (Forward declaration to avoid circular dependency)
@@ -39,6 +38,7 @@
     
     struct MusicParserResult {
         int lolWut = 0;
+        Note noteResult;
     };
 }
 
@@ -62,7 +62,7 @@
     /* deliver output */
 
 statement    : %empty           { /* allow empty (or pure comment) lines */ }
-             | NUM              { cb->lolWut = 57; }
+             | NUM              { cb->noteResult = Note{}; }
              ;
 
 %%

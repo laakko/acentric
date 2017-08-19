@@ -54,10 +54,6 @@
     yylloc->step();
 %}
 
- /* do not treat 'I' or 'H' as identifiers if followed by '(' */
-I/\(                        LITERAL
-H/\(                        LITERAL
-
 [[:alpha:]][[:alnum:]_]*    STR_TOKEN(NAME)
 
 [[:digit:]]+                NUM_TOKEN(NUM)

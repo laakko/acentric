@@ -32,6 +32,19 @@ add_executable (main
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(mparse
+	include/BasicNote.h
+	include/Note.h
+	include/Interval.h
+	include/BasicScale.h
+	include/DiatonicScale.h
+	include/Chord.h
+	include/BasicChord.h
+
+	src/Note.cpp
+	src/Interval.cpp
+	src/DiatonicScale.cpp
+	src/Chord.cpp
+	
     src/mparse_main.cpp
     src/MusicReader.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/MusicParser.cxx
