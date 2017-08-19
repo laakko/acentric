@@ -46,7 +46,7 @@
 %define api.token.prefix {T_}
 
 %token                  END     0   "end of file"
-%token <int>         POSINT
+%token <int>            POSINT
 
 %start statement
 

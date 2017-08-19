@@ -25,8 +25,8 @@
 
 [1-9][0-9]*                 MAKE_TOKEN(POSINT, int, std::atoi(yytext));
 
-[ \t]                 {/* whitespace */}
 \n                          yylloc->lines(1);
+[ \t]                       { }
 .                           { }
 
 %%
