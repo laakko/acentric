@@ -8,10 +8,10 @@
     #include "MusicLexer.h"
 
     // utility macros to simplify the actions
-    #define YIELD_TOKEN(tok, val, type)     yylval->build<type>(val); \
+    #define MAKE_TOKEN(tok, type, val)     yylval->build<type>(val); \
                                             return yy::MusicParser::token::T_##tok;
 
-    #define YY_TXT                  std::string(yytext, yyleng)
+    #define YY_STRING                  std::string(yytext, yyleng)
 
     #define YY_USER_ACTION          yylloc->columns(yyleng);
 %}
@@ -23,9 +23,9 @@
     yylloc->step();
 %}
 
-[[:digit:]]+                yylval->build<double>(std::atof(yytext)); return yy::MusicParser::token::T_NUM;
+[1-9][0-9]*                 MAKE_TOKEN(POSINT, int, std::atoi(yytext));
 
-[[:blank:]]                 {/* whitespace */}
+[ \t]                 {/* whitespace */}
 \n                          yylloc->lines(1);
 .                           { }
 

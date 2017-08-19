@@ -14,15 +14,6 @@
 /* assert correct cleanup of semantic value objects */
 %define parse.assert
 
-%define api.value.type variant
-%define api.token.prefix {T_}
-
-%token                  END     0   "end of file"
-%token <double>         NUM
-
-%start statement
-
-
 %code requires {
     #include <stdexcept>
     #include <string>
@@ -48,20 +39,21 @@
 
     #include "MusicLexer.h"
 
-    using std::move;
-
-    #ifdef  yylex
-    # undef yylex
-    #endif
     #define yylex lexer->lex
-
 }
+
+%define api.value.type variant
+%define api.token.prefix {T_}
+
+%token                  END     0   "end of file"
+%token <int>         POSINT
+
+%start statement
+
 %%
 
-    /* deliver output */
-
 statement    : %empty           { /* allow empty (or pure comment) lines */ }
-             | NUM              { cb->lolWut = $1; }
+             | POSINT              { cb->lolWut = $1; }
              ;
 
 %%
