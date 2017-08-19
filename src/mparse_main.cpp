@@ -5,6 +5,6 @@
 
 int main (int argc, char *argv[])
 {
-    auto result = MusicReader::parseInt("1234");
+    auto result = MusicReader::parseInt("01234");
     std::cout << result << std::endl;
 }

@@ -47,16 +47,49 @@
 %define api.value.type variant
 %define api.token.prefix {T_}
 
-%token                  END     0   "end of file"
-%token <int>            POSINT
+%token
+    END 0
+    REST
+    SHARP
+    FLAT
+    MINUS_SIGN
+    PLUS_SIGN
+    UNDERSCORE
+    CARAT
+    LPAREN
+    RPAREN
+    WHITESPACE
+    SEMICOLON
+;
 
-%start statement
+%token <char> BASIC_NOTE
+%token <char> INTERVAL_TYPE
+%token <int> NONNEG_INTEGER
+%token <int> DOTS
+%type <int> octave
+%type <int> offset
 
 %%
 
-statement    : %empty           { /* allow empty (or pure comment) lines */ }
-             | POSINT              { cb->lolWut = $1; }
-             ;
+%start root;
+
+root:
+    | root note SEMICOLON
+    ;
+
+note:
+    BASIC_NOTE offset octave                            { std::cout << "Found a note, letter " << $1 << ", offset " << $2 << ", octave " << $3 << std::endl; }
+    ;
+
+offset: { $$ = 0; }
+    | FLAT offset  { $$ = $2 - 1; }
+    | SHARP offset { $$ = $2 + 1; }
+    ;
+
+octave: { $$ = 4; }
+    | NONNEG_INTEGER               { $$ = $1; }
+    | MINUS_SIGN NONNEG_INTEGER  { $$ = -$2; }
+    ;
 
 %%
 

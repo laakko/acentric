@@ -7,30 +7,41 @@
     #include "MusicParser.hxx"
     #include "MusicLexer.h"
 
-    // utility macros to simplify the actions
-    #define MAKE_TOKEN(tok, type, val)     yylval->build<type>(val); \
-                                            return yy::MusicParser::token::T_##tok;
-
-    #define YY_STRING                  std::string(yytext, yyleng)
-
-    static yy::location loc;
+    yy::location loc;
 
     #define YY_USER_ACTION loc.columns(yyleng);
 %}
 
 %%
 
- /* code to be executed at every yylex() call */
 %{
+    // Run this code on every yylex() call
     loc.step();
 %}
 
-[1-9][0-9]*                 return yy::MusicParser::make_POSINT(std::atoi(yytext), loc);
+[ABCDEFG]       { return yy::MusicParser::make_BASIC_NOTE(*yytext, loc); }
+"R"             { return yy::MusicParser::make_REST(loc); }
+"#"             { return yy::MusicParser::make_SHARP(loc);}
+"b"             { return yy::MusicParser::make_FLAT(loc); }
+[PmMda]         { return yy::MusicParser::make_INTERVAL_TYPE(*yytext, loc); }
+"-"             { return yy::MusicParser::make_MINUS_SIGN(loc); }
+"+"             { return yy::MusicParser::make_PLUS_SIGN(loc); }
+"_"             { return yy::MusicParser::make_UNDERSCORE(loc); }
+[\.]+           { return yy::MusicParser::make_DOTS(strlen(yytext), loc); }
+"^"             { return yy::MusicParser::make_CARAT(loc); }
+"("             { return yy::MusicParser::make_LPAREN(loc); }
+")"             { return yy::MusicParser::make_RPAREN(loc); }
+";"             { return yy::MusicParser::make_SEMICOLON(loc); }
 
-[\n]+                       { loc.lines(yyleng); loc.step(); }
-[ \t]                       { loc.step(); }
-.                           { }
-<<EOF>>                     return yy::MusicParser::make_END(loc);
+[0-9]+  {
+    int n = std::stoi(yytext); // TODO check out of range
+    return yy::MusicParser::make_NONNEG_INTEGER(n, loc);
+}
+
+[ \t]+          { loc.step(); }
+[\n]+           { loc.lines (yyleng); loc.step(); }
+.               { std::cout << "Unhandled character: " << yytext << std::endl; }
+<<EOF>>         { return yy::MusicParser::make_END(loc); }
 
 %%
 
