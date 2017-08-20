@@ -23,6 +23,9 @@ public:
 	/*! Standard, non-human-friendly Note constructor. Defaults to A, with no sharps or flats, in the fourth octave. */
 	Note(BasicNote base = BasicNote::A, int offset = 0, int octave = 4);
 
+	/*! An alternative constructor. base must be A, B, C, D, E, F, or G (case sensitive). */
+	Note(char base, int offset = 0, int octave = 4);
+
 	/*! Text-based Note constructor. Slightly more human friendly than the standard constructor :)
 	 
 	There are two main notations: traditional (e.g. A#4 or Bb2) or, *far* less commonly, parenthesis-based (e.g. A(b^5)3 or G(#^3)2).

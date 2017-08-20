@@ -29,7 +29,7 @@
     };
     
     struct MusicParserResult {
-        int lolWut = 0;
+        bool interactive = false;
         Note noteResult;
     };
 }
@@ -42,6 +42,10 @@
     #include "MusicLexer.h"
 
     #define yylex lexer->lex
+
+    #define INTERACTIVE_OUT(output) \
+        if (cb->interactive) std::cout << output << std::endl;
+
 }
 
 %define api.value.type variant
@@ -68,27 +72,28 @@
 %token <int> DOTS
 %type <int> octave
 %type <int> offset
+%type <Note> note
 
 %%
 
 %start root;
 
-root:
-    | root note SEMICOLON
+root: %empty
+    | root note SEMICOLON                       { cb->noteResult = $2; INTERACTIVE_OUT($2) }
     ;
 
 note:
-    BASIC_NOTE offset octave                            { std::cout << "Found a note, letter " << $1 << ", offset " << $2 << ", octave " << $3 << std::endl; }
+    BASIC_NOTE offset octave                    { $$ = Note{$1, $2, $3}; }
     ;
 
-offset: { $$ = 0; }
-    | FLAT offset  { $$ = $2 - 1; }
-    | SHARP offset { $$ = $2 + 1; }
+offset: %empty                                  { $$ = 0; }
+    | FLAT offset                               { $$ = $2 - 1; }
+    | SHARP offset                              { $$ = $2 + 1; }
     ;
 
-octave: { $$ = 4; }
-    | NONNEG_INTEGER               { $$ = $1; }
-    | MINUS_SIGN NONNEG_INTEGER  { $$ = -$2; }
+octave: %empty                                  { $$ = 4; }
+    | NONNEG_INTEGER                            { $$ = $1; }
+    | MINUS_SIGN NONNEG_INTEGER                 { $$ = -$2; }
     ;
 
 %%
