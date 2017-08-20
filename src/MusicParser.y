@@ -22,6 +22,7 @@
 
     #include "location.hh"
     #include "Note.h"
+    #include "Interval.h"
     #include "BasicNote.h"
 
     namespace yy {
@@ -31,6 +32,7 @@
     struct MusicParserResult {
         bool interactive = false;
         Note noteResult;
+        Interval intervalResult;
     };
 }
 
@@ -69,10 +71,12 @@
 %token <char> BASIC_NOTE
 %token <char> INTERVAL_TYPE
 %token <int> NONNEG_INTEGER
+%token <int> POS_INTEGER
 %token <int> DOTS
 %type <int> octave
 %type <int> offset
 %type <Note> note
+%type <Interval> interval
 
 %%
 
@@ -80,6 +84,7 @@
 
 root: %empty
     | root note SEMICOLON                       { cb->noteResult = $2; INTERACTIVE_OUT($2) }
+    | root interval SEMICOLON                   { cb->intervalResult = $2; INTERACTIVE_OUT($2) }
     ;
 
 note:
@@ -95,6 +100,9 @@ octave: %empty                                  { $$ = 4; }
     | NONNEG_INTEGER                            { $$ = $1; }
     | MINUS_SIGN NONNEG_INTEGER                 { $$ = -$2; }
     ;
+
+interval:
+    INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{}; } // TODO rewrite interval class to support this
 
 %%
 

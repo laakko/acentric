@@ -33,6 +33,11 @@
 ")"             { return yy::MusicParser::make_RPAREN(loc); }
 ";"             { return yy::MusicParser::make_SEMICOLON(loc); }
 
+[1-9][0-9]*  {
+    int n = std::stoi(yytext); // TODO check out of range
+    return yy::MusicParser::make_POS_INTEGER(n, loc);
+}
+
 [0-9]+  {
     int n = std::stoi(yytext); // TODO check out of range
     return yy::MusicParser::make_NONNEG_INTEGER(n, loc);
