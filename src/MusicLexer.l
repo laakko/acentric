@@ -1,11 +1,20 @@
 %option c++
 %option 8bit warn nodefault
 %option noyywrap
+%option nounistd
 
 %{
     #include <stdexcept>
     #include "MusicParser.hxx"
     #include "MusicLexer.h"
+
+	#if _WIN32
+		#include <io.h>
+	#endif
+
+	#if __linux__
+		#include <unistd.h>
+	#endif
 
     yy::location loc;
 
