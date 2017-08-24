@@ -3,13 +3,28 @@ add_compile_options(-std=c++14)
 
 project (music-theory)
 
+# TODO make all the flex/bison stuff optional
+if (WIN32)
+	message("Windows detected, finding Cygwin and flex.exe/bison.exe")
+
+	find_package(cygwin REQUIRED)
+
+	set(FLEX_EXECUTABLE "${CYGWIN_INSTALL_PATH}/bin/flex.exe")
+	set(FLEX_INCLUDE_DIR "${CYGWIN_INSTALL_PATH}/usr/include")
+	set(FL_LIBRARY "${CYGWIN_INSTALL_PATH}/lib/libfl.a")
+	set(BISON_EXECUTABLE "${CYGWIN_INSTALL_PATH}/bin/bison.exe")
+endif (WIN32)
+
 find_package(BISON)
 find_package(FLEX)
 
 BISON_TARGET (MusicParser src/MusicParser.y ${CMAKE_CURRENT_BINARY_DIR}/MusicParser.cxx
               COMPILE_FLAGS --defines=${CMAKE_CURRENT_BINARY_DIR}/MusicParser.hxx)
+
 FLEX_TARGET  (MusicLexer src/MusicLexer.l ${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.cxx
-              COMPILE_FLAGS --header-file=${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.hxx)
+			  COMPILE_FLAGS --header-file=${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.hxx)
+
+
 ADD_FLEX_BISON_DEPENDENCY(MusicLexer MusicParser)
 
 include_directories(3rd-party include)
@@ -31,6 +46,9 @@ add_executable (main
 )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+if (WIN32)
+	include_directories(${FLEX_INCLUDE_DIR})
+endif (WIN32)
 add_executable(mparse
 	include/BasicNote.h
 	include/Note.h
