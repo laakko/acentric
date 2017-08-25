@@ -9,7 +9,7 @@
     #include "MusicLexer.h"
 
 	#if _WIN32
-		#include <io.h>
+		#include <io.h> // Provides Windows version of isatty()
 	#endif
 
 	#if __linux__
@@ -42,10 +42,7 @@
 ")"             { return yy::MusicParser::make_RPAREN(loc); }
 ";"             { return yy::MusicParser::make_SEMICOLON(loc); }
 
-[0-9]+  {
-    int n = std::stoi(yytext); // TODO check out of range
-    return yy::MusicParser::make_NONNEG_INTEGER(n, loc);
-}
+"0"  {			  return yy::MusicParser::make_ZERO(loc); }
 
 [1-9][0-9]*  {
     int n = std::stoi(yytext); // TODO check out of range

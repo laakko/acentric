@@ -66,11 +66,11 @@
     RPAREN
     WHITESPACE
     SEMICOLON
+	ZERO
 ;
 
 %token <char> BASIC_NOTE
 %token <char> INTERVAL_TYPE
-%token <int> NONNEG_INTEGER
 %token <int> POS_INTEGER
 %token <int> DOTS
 %type <int> octave
@@ -87,8 +87,8 @@ root: %empty
     | root interval SEMICOLON                   { cb->intervalResult = $2; INTERACTIVE_OUT($2) }
     ;
 
-note:
-    BASIC_NOTE offset octave                    { $$ = Note{$1, $2, $3}; }
+note: BASIC_NOTE offset octave                  { $$ = Note{$1, $2, $3}; }
+	| note PLUS_SIGN interval					{ $$ = $1 + $3; }	
     ;
 
 offset: %empty                                  { $$ = 0; }
@@ -97,12 +97,15 @@ offset: %empty                                  { $$ = 0; }
     ;
 
 octave: %empty                                  { $$ = 4; }
-    | NONNEG_INTEGER                            { $$ = $1; }
-    | MINUS_SIGN NONNEG_INTEGER                 { $$ = -$2; }
+    | POS_INTEGER                               { $$ = $1; }
+    | MINUS_SIGN POS_INTEGER                    { $$ = -$2; }
+	| ZERO										{ $$ = 0; }
+	| MINUS_SIGN ZERO							{ $$ = 0; }
     ;
 
 interval:
-    INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{}; } // TODO rewrite interval class to support this
+    INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{$1, $2}; }
+	;
 
 %%
 

@@ -31,6 +31,8 @@ public:
 	For example, Interval(3, 4) would generate d4, *not* M3 (though both of these intervals are acoustically the same). On the other hand, Interval(2, 4) would generate M3. */
 	Interval(int basicDistance = 0, int semitones = 0);
 
+	Interval(char intervalType, int intervalNumber);
+
 	/*! Text-based Interval constructor. Recommended for human use.
 	
 	There are two main notations: traditional (e.g. M3 for major third, d5 for diminished fifth) or, *far* less commonly,

@@ -12,6 +12,67 @@ Interval::Interval(int basicDistance, int semitones)
 	this->semitones = semitones;
 }
 
+Interval::Interval(char intervalType, int intervalNumber) {
+	if (intervalNumber < 1)
+		throw "bad intervalNumber parameter in Interval ctor: " + std::to_string(intervalNumber);
+	this->basicDistance = intervalNumber - 1;
+	int offset = 0;
+
+	this->semitones = (this->basicDistance / 7) * 12;
+	int remainder{ this->basicDistance % 7 };
+	switch (intervalType) {
+	case 'P':
+		if (remainder == 0) break; // P1
+		else if (remainder == 3) this->semitones += 5; // P4
+		else if (remainder == 4) this->semitones += 7; // P5
+		else throw "Invalid interval number given for interval class P";
+		break;
+	case 'm':
+		if (remainder == 1) this->semitones += 1; // m2
+		else if (remainder == 2) this->semitones += 3; // m3
+		else if (remainder == 5) this->semitones += 8; // m6
+		else if (remainder == 6) this->semitones += 10; // m7
+		else throw "Invalid interval number given for interval class m";
+		break;
+	case 'M':
+		if (remainder == 1) this->semitones += 2; // M2
+		else if (remainder == 2) this->semitones += 4; // M3
+		else if (remainder == 5) this->semitones += 9; // M6
+		else if (remainder == 6) this->semitones += 11; // M7
+		else throw "Invalid interval number given for interval class M";
+		break;
+	case 'd':
+		// d8 special case
+		if (remainder == 0 && this->semitones >= 12) {
+			this->semitones -= 1;
+			break;
+		}
+		if (remainder == 1) break; // d2
+		else if (remainder == 2) this->semitones += 2; // d3
+		else if (remainder == 3) this->semitones += 4; // d4
+		else if (remainder == 4) this->semitones += 6; // d5
+		else if (remainder == 5) this->semitones += 7; // d6
+		else if (remainder == 6) this->semitones += 9; // d7
+		else throw "Invalid interval number given for interval class d";
+		break;
+	case 'a':
+		if (remainder == 0) this->semitones += 1; // a1
+		else if (remainder == 1) this->semitones += 3; // a2
+		else if (remainder == 2) this->semitones += 5; // a3
+		else if (remainder == 3) this->semitones += 6; // a4
+		else if (remainder == 4) this->semitones += 8; // a5
+		else if (remainder == 5) this->semitones += 10; // a6
+		else if (remainder == 6) this->semitones += 12; // a7
+		else throw "Invalid interval number given for interval class A";
+		break;
+	}
+
+	// Add offset and check to make sure it's still positive
+	this->semitones += offset;
+	if (this->semitones < 0)
+		throw "Invalid interval semitones calculated in Interval ctor (negative value)";
+}
+
 Interval::Interval(std::string commonName)
 {
 	// Validate syntax (semantics get validated later)

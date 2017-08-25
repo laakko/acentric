@@ -24,7 +24,6 @@ BISON_TARGET (MusicParser src/MusicParser.y ${CMAKE_CURRENT_BINARY_DIR}/MusicPar
 FLEX_TARGET  (MusicLexer src/MusicLexer.l ${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.cxx
 			  COMPILE_FLAGS --header-file=${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.hxx)
 
-
 ADD_FLEX_BISON_DEPENDENCY(MusicLexer MusicParser)
 
 include_directories(3rd-party include)
@@ -67,6 +66,9 @@ add_executable(mparse
     src/MusicReader.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/MusicParser.cxx
     ${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.cxx
+	
+	src/MusicLexer.l
+	src/MusicParser.y
 )
 
 add_executable (run-tests
