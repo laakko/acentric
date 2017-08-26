@@ -12,11 +12,10 @@ Interval::Interval(int basicDistance, int semitones)
 	this->semitones = semitones;
 }
 
-Interval::Interval(char intervalType, int intervalNumber) {
+Interval::Interval(char intervalType, int intervalNumber, int offset) {
 	if (intervalNumber < 1)
 		throw "bad intervalNumber parameter in Interval ctor: " + std::to_string(intervalNumber);
 	this->basicDistance = intervalNumber - 1;
-	int offset = 0;
 
 	this->semitones = (this->basicDistance / 7) * 12;
 	int remainder{ this->basicDistance % 7 };
@@ -63,8 +62,10 @@ Interval::Interval(char intervalType, int intervalNumber) {
 		else if (remainder == 4) this->semitones += 8; // a5
 		else if (remainder == 5) this->semitones += 10; // a6
 		else if (remainder == 6) this->semitones += 12; // a7
-		else throw "Invalid interval number given for interval class A";
+		else throw "Invalid interval number given for interval class a";
 		break;
+	default:
+		throw "Invalid interval type given to Interval ctor (must be P, m, M, d, or a)";
 	}
 
 	// Add offset and check to make sure it's still positive
@@ -77,7 +78,7 @@ Interval::Interval(std::string commonName)
 {
 	// Validate syntax (semantics get validated later)
 	// TODO there's no reason not to allow m, d, and A in paren form...Is there? Check feasibility
-	std::regex validInterval{ R"REGEX(\([PM][+-][0-9]+\)[1-9][0-9]*|[PmMdA][1-9][0-9]*)REGEX" };
+	std::regex validInterval{ R"REGEX(\([PM][+-][0-9]+\)[1-9][0-9]*|[PmMda][1-9][0-9]*)REGEX" };
 
 	if (!std::regex_match(commonName, validInterval)) {
 		throw "Invalid string passed to Note ctor";
@@ -89,7 +90,7 @@ Interval::Interval(std::string commonName)
 	this->semitones = 0;
 
 	// Now the tricky part...Pull input into variables
-	char intervalClass; // P, m, M, d, or A
+	char intervalClass; // P, m, M, d, or a
 	int offset{ 0 }; // The number after the P or M and before the close paren
 
 	if (commonName[0] != '(') {
@@ -150,7 +151,7 @@ Interval::Interval(std::string commonName)
 		else if (remainder == 6) this->semitones += 9; // d7
 		else throw "Invalid interval number given for interval class d";
 		break;
-	case 'A':
+	case 'a':
 		if (remainder == 0) this->semitones += 1; // A1
 		else if (remainder == 1) this->semitones += 3; // A2
 		else if (remainder == 2) this->semitones += 5; // A3
@@ -158,7 +159,7 @@ Interval::Interval(std::string commonName)
 		else if (remainder == 4) this->semitones += 8; // A5
 		else if (remainder == 5) this->semitones += 10; // A6
 		else if (remainder == 6) this->semitones += 12; // A7
-		else throw "Invalid interval number given for interval class A";
+		else throw "Invalid interval number given for interval class a";
 		break;
 	}
 
@@ -239,7 +240,7 @@ std::ostream & operator<<(std::ostream & os, const Interval & interval)
 	else if (offset == 0 && !perfect)
 		os << "M";
 	else if (offset == 1)
-		os << "A";
+		os << "a";
 	else if (offset > 1) {
 		if (perfect)
 			os << "(P";

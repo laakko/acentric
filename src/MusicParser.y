@@ -66,7 +66,8 @@
     RPAREN
     WHITESPACE
     SEMICOLON
-	ZERO
+    ZERO
+    NEWLINE
 ;
 
 %token <char> BASIC_NOTE
@@ -83,12 +84,12 @@
 %start root;
 
 root: %empty
-    | root note SEMICOLON                       { cb->noteResult = $2; INTERACTIVE_OUT($2) }
-    | root interval SEMICOLON                   { cb->intervalResult = $2; INTERACTIVE_OUT($2) }
+    | root note NEWLINE                       { cb->noteResult = $2; INTERACTIVE_OUT($2) }
+    | root interval NEWLINE                   { cb->intervalResult = $2; INTERACTIVE_OUT($2) }
     ;
 
 note: BASIC_NOTE offset octave                  { $$ = Note{$1, $2, $3}; }
-	| note PLUS_SIGN interval					{ $$ = $1 + $3; }	
+    | note PLUS_SIGN interval					{ $$ = $1 + $3; }
     ;
 
 offset: %empty                                  { $$ = 0; }
@@ -105,6 +106,8 @@ octave: %empty                                  { $$ = 4; }
 
 interval:
     INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{$1, $2}; }
+	| LPAREN INTERVAL_TYPE PLUS_SIGN POS_INTEGER RPAREN POS_INTEGER		{ $$ = Interval{$2, $6, $4}; }
+	| LPAREN INTERVAL_TYPE MINUS_SIGN POS_INTEGER RPAREN POS_INTEGER	{ $$ = Interval{$2, $6, -$4}; }
 	;
 
 %%

@@ -42,7 +42,7 @@
 ")"             { return yy::MusicParser::make_RPAREN(loc); }
 ";"             { return yy::MusicParser::make_SEMICOLON(loc); }
 
-"0"  {			  return yy::MusicParser::make_ZERO(loc); }
+"0"             { return yy::MusicParser::make_ZERO(loc); }
 
 [1-9][0-9]*  {
     int n = std::stoi(yytext); // TODO check out of range
@@ -50,7 +50,8 @@
 }
 
 [ \t]+          { loc.step(); }
-[\n]+           { loc.lines (yyleng); loc.step(); }
+\\\r?\n         { loc.lines (yyleng); loc.step(); }
+\r?\n           { loc.lines (yyleng); loc.step(); return yy::MusicParser::make_NEWLINE(loc); }
 .               { std::cout << "Unhandled character: " << yytext << std::endl; }
 <<EOF>>         { return yy::MusicParser::make_END(loc); }
 

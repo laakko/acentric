@@ -29,9 +29,9 @@ public:
 	
 	This constructor expects a basic distance (*not* interval number) and a semitone distance. The basic distance is simply the interval number minus one.
 	For example, Interval(3, 4) would generate d4, *not* M3 (though both of these intervals are acoustically the same). On the other hand, Interval(2, 4) would generate M3. */
-	Interval(int basicDistance = 0, int semitones = 0);
+	Interval(int basicDistance, int semitones);
 
-	Interval(char intervalType, int intervalNumber);
+	Interval(char intervalType = 'P', int intervalNumber = 1, int offset = 0);
 
 	/*! Text-based Interval constructor. Recommended for human use.
 	
