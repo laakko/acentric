@@ -65,6 +65,7 @@
     LPAREN
     RPAREN
     WHITESPACE
+	COLON
     SEMICOLON
     ZERO
     NEWLINE
@@ -108,6 +109,7 @@ interval:
     INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{$1, $2}; }
 	| LPAREN INTERVAL_TYPE PLUS_SIGN POS_INTEGER RPAREN POS_INTEGER		{ $$ = Interval{$2, $6, $4}; }
 	| LPAREN INTERVAL_TYPE MINUS_SIGN POS_INTEGER RPAREN POS_INTEGER	{ $$ = Interval{$2, $6, -$4}; }
+	| note COLON note							{ $$ = $1.getInterval($3); }
 	;
 
 %%

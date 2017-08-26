@@ -40,8 +40,8 @@
 "^"             { return yy::MusicParser::make_CARAT(loc); }
 "("             { return yy::MusicParser::make_LPAREN(loc); }
 ")"             { return yy::MusicParser::make_RPAREN(loc); }
+":"				{ return yy::MusicParser::make_COLON(loc); }
 ";"             { return yy::MusicParser::make_SEMICOLON(loc); }
-
 "0"             { return yy::MusicParser::make_ZERO(loc); }
 
 [1-9][0-9]*  {
