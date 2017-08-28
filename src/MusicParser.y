@@ -91,6 +91,8 @@ root: %empty
 
 note: BASIC_NOTE offset octave                  { $$ = Note{$1, $2, $3}; }
     | note PLUS_SIGN interval					{ $$ = $1 + $3; }
+	| note MINUS_SIGN interval					{ $$ = $1 - $3; }
+	| interval PLUS_SIGN note					{ $$ = $3 + $1; }
     ;
 
 offset: %empty                                  { $$ = 0; }
@@ -110,6 +112,8 @@ interval:
 	| LPAREN INTERVAL_TYPE PLUS_SIGN POS_INTEGER RPAREN POS_INTEGER		{ $$ = Interval{$2, $6, $4}; }
 	| LPAREN INTERVAL_TYPE MINUS_SIGN POS_INTEGER RPAREN POS_INTEGER	{ $$ = Interval{$2, $6, -$4}; }
 	| note COLON note							{ $$ = $1.getInterval($3); }
+	| interval PLUS_SIGN interval				{ $$ = $1 + $3; }
+	| interval MINUS_SIGN interval				{ $$ = $1 - $3; }
 	;
 
 %%

@@ -184,6 +184,27 @@ std::vector<Interval> Interval::makeIntervalVector(std::string intervals)
 	return rtnIntervals;
 }
 
+Interval Interval::operator+(const Interval & other)
+{
+	int basicDistance = this->getBasicDistance() + other.getBasicDistance();
+	int semitones = this->semitones + other.semitones;
+
+	return Interval(basicDistance, semitones);
+}
+
+Interval Interval::operator-(const Interval & other)
+{
+	int basicDistance = this->getBasicDistance() - other.getBasicDistance();
+	if (basicDistance < 0)
+		throw "Invalid interval subtraction (negative basic/note name distance)";
+
+	int semitones = this->semitones - other.semitones;
+	if (semitones < 0)
+		throw "Invalid interval subtraction (negative semitone distance)";
+
+	return Interval(basicDistance, semitones);
+}
+
 std::ostream & operator<<(std::ostream & os, const Interval & interval)
 {
 	// Determine if the interval, unmodified, would be P or M

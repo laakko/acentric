@@ -9,6 +9,7 @@ if (WIN32)
 
 	find_package(cygwin REQUIRED)
 
+	# TODO check to make sure the following files exist, error if not (tell user to add flex/bison to cygwin)
 	set(FLEX_EXECUTABLE "${CYGWIN_INSTALL_PATH}/bin/flex.exe")
 	set(FLEX_INCLUDE_DIR "${CYGWIN_INSTALL_PATH}/usr/include")
 	set(FL_LIBRARY "${CYGWIN_INSTALL_PATH}/lib/libfl.a")
@@ -19,7 +20,7 @@ find_package(BISON)
 find_package(FLEX)
 
 BISON_TARGET (MusicParser src/MusicParser.y ${CMAKE_CURRENT_BINARY_DIR}/MusicParser.cxx
-              COMPILE_FLAGS --defines=${CMAKE_CURRENT_BINARY_DIR}/MusicParser.hxx)
+			  COMPILE_FLAGS "--defines=${CMAKE_CURRENT_BINARY_DIR}/MusicParser.hxx --report=state --report-file=${CMAKE_CURRENT_BINARY_DIR}/MusicParserStates.log")
 
 FLEX_TARGET  (MusicLexer src/MusicLexer.l ${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.cxx
 			  COMPILE_FLAGS --header-file=${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.hxx)

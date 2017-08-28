@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+class Note;
+
 /*! The Interval class represents a distance between one Note and another Note. 
 
 An Interval has two components: A basic distance, i.e. number of basic notes from one note to another (*not including the starting note*), and semitone distance.
@@ -25,7 +27,7 @@ private:
 	int semitones;
 
 public:
-	/*! Standard, non-human-friendly Interval constructor. Defaults to P1 (i.e., perfect unison). 
+	/*! Standard, non-human-friendly Interval constructor.
 	
 	This constructor expects a basic distance (*not* interval number) and a semitone distance. The basic distance is simply the interval number minus one.
 	For example, Interval(3, 4) would generate d4, *not* M3 (though both of these intervals are acoustically the same). On the other hand, Interval(2, 4) would generate M3. */
@@ -100,6 +102,10 @@ public:
 
 	/*! Returns the semitone distance of this interval. For examle, if this is a P5 interval, this function will return 7. */
 	int getSemitones() const { return semitones; }
+
+	Interval operator+(const Interval& other);
+
+	Interval operator-(const Interval& other);
 
 	// TODO add chromatic intervals, e.g. C4-F4 = i5
 };
