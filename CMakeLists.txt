@@ -20,7 +20,7 @@ find_package(BISON)
 find_package(FLEX)
 
 BISON_TARGET (MusicParser src/MusicParser.y ${CMAKE_CURRENT_BINARY_DIR}/MusicParser.cxx
-			  COMPILE_FLAGS "--defines=${CMAKE_CURRENT_BINARY_DIR}/MusicParser.hxx --report=state --report-file=${CMAKE_CURRENT_BINARY_DIR}/MusicParserStates.log")
+			  COMPILE_FLAGS "--defines=${CMAKE_CURRENT_BINARY_DIR}/MusicParser.hxx --report=all --report-file=${CMAKE_CURRENT_BINARY_DIR}/MusicParserStates.log")
 
 FLEX_TARGET  (MusicLexer src/MusicLexer.l ${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.cxx
 			  COMPILE_FLAGS --header-file=${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.hxx)

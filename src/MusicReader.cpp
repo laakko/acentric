@@ -9,6 +9,9 @@ void MusicReader::ReadMusicInteractive(){
     out.interactive = true;
     yy::MusicLexer lexer(&std::cin);
     yy::MusicParser parser(&lexer, &out);
+	parser.set_debug_stream(std::cout);
+	parser.set_debug_level(1);
+
     parser.parse();
 }
 

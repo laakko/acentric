@@ -13,6 +13,8 @@
 /* increase usefulness of error messages */
 %define parse.error verbose
 
+%define parse.trace
+
 /* assert correct cleanup of semantic value objects */
 %define parse.assert
 
