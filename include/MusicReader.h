@@ -10,7 +10,7 @@
 class MusicReader : public MusicParserResult
 {
 public:
-    static void ReadMusicInteractive();
+    static void ReadMusicInteractive(bool debug = false);
 
     static Note readNote(const std::string&);
 

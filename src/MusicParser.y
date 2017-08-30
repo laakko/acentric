@@ -48,7 +48,7 @@
     #define yylex lexer->lex
 
     #define INTERACTIVE_OUT(output) \
-        if (cb->interactive) std::cout << output << std::endl;
+        if (cb->interactive) std::cout << output << std::endl << "> ";
 
 }
 
@@ -82,6 +82,9 @@
 %type <Note> note
 %type <Interval> interval
 
+%left COLON
+%left MINUS_SIGN PLUS_SIGN
+
 %%
 
 %start root;
@@ -104,13 +107,10 @@ offset: %empty                                  { $$ = 0; }
 
 octave: %empty                                  { $$ = 4; }
     | POS_INTEGER                               { $$ = $1; }
-    | MINUS_SIGN POS_INTEGER                    { $$ = -$2; }
 	| ZERO										{ $$ = 0; }
-	| MINUS_SIGN ZERO							{ $$ = 0; }
     ;
 
-interval:
-    INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{$1, $2}; }
+interval: INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{$1, $2}; }
 	| LPAREN INTERVAL_TYPE PLUS_SIGN POS_INTEGER RPAREN POS_INTEGER		{ $$ = Interval{$2, $6, $4}; }
 	| LPAREN INTERVAL_TYPE MINUS_SIGN POS_INTEGER RPAREN POS_INTEGER	{ $$ = Interval{$2, $6, -$4}; }
 	| note COLON note							{ $$ = $1.getInterval($3); }

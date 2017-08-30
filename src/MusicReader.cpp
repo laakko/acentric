@@ -4,13 +4,18 @@
 #include "MusicParser.hxx"
 #include "MusicLexer.h"
 
-void MusicReader::ReadMusicInteractive(){
+void MusicReader::ReadMusicInteractive(bool debug){
     MusicParserResult out;
     out.interactive = true;
     yy::MusicLexer lexer(&std::cin);
     yy::MusicParser parser(&lexer, &out);
-	parser.set_debug_stream(std::cout);
-	parser.set_debug_level(1);
+	
+	if (debug) {
+		parser.set_debug_stream(std::cout);
+		parser.set_debug_level(1);
+	}
+
+	std::cout << "Welcome to Centric" << std::endl << "> ";
 
     parser.parse();
 }
