@@ -3,11 +3,42 @@
 #include "Note.h"
 #include "BasicNote.h"
 
-Note::Note(BasicNote base, int offset, int octave)
+Note::Note(BasicNote base, int offset, int octave) :
+	base(base),
+	offset(offset),
+	octave(octave)
 {
-	this->base = base;
-	this->offset = offset;
-	this->octave = octave;
+}
+
+Note::Note(char base, int offset, int octave) :
+	offset(offset),
+	octave(octave)
+{
+	switch (base){
+		case 'A':
+			this->base = BasicNote::A;
+			break;
+		case 'B':
+			this->base = BasicNote::B;
+			break;
+		case 'C':
+			this->base = BasicNote::C;
+			break;
+		case 'D':
+			this->base = BasicNote::D;
+			break;
+		case 'E':
+			this->base = BasicNote::E;
+			break;
+		case 'F':
+			this->base = BasicNote::F;
+			break;
+		case 'G':
+			this->base = BasicNote::G;
+			break;
+		default:
+			throw "Invalid base char passed to note ctor";
+	}
 }
 
 Note::Note(const std::string & textNote)
