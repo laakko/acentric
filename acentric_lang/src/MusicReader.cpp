@@ -15,7 +15,7 @@ void MusicReader::ReadMusicInteractive(bool debug){
 		parser.set_debug_level(1);
 	}
 
-	std::cout << "Welcome to Centric" << std::endl << "> ";
+	std::cout << "Welcome to Acentric" << std::endl << "> ";
 
     parser.parse();
 }
