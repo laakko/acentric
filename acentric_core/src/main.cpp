@@ -10,6 +10,7 @@
 #include "BasicChord.h"
 
 int main() {
+	using namespace acentric_core;
 
 	DiatonicScale csLocrian{ Note("C#"), BasicScale::Locrian };
 	std::cout << csLocrian << std::endl;

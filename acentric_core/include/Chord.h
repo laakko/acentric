@@ -9,27 +9,31 @@
 #include "Interval.h"
 #include "BasicChord.h"
 
-class Chord {
+namespace acentric_core {
 
-private:
-	Note root;
-	std::vector<Interval> pitches;
+	class Chord {
 
-public:
-	Chord(Note root, BasicChord chord);
-	Chord(Note root, std::vector<Interval> pitches);
+	private:
+		Note root;
+		std::vector<Interval> pitches;
 
-	Note getBase() const { return root; }
-	std::vector<Interval> getPitches() const { return pitches; }
+	public:
+		Chord(Note root, BasicChord chord);
+		Chord(Note root, std::vector<Interval> pitches);
 
-	void insertPitch(Interval pitchToInsert);
-	void removePitch(Interval pitchToRemove);
-	void setRoot(Note newRoot);
+		Note getBase() const { return root; }
+		std::vector<Interval> getPitches() const { return pitches; }
 
-	// TODO add functionality to get inversions
+		void insertPitch(Interval pitchToInsert);
+		void removePitch(Interval pitchToRemove);
+		void setRoot(Note newRoot);
 
-};
+		// TODO add functionality to get inversions
 
-std::ostream& operator<<(std::ostream &os, const Chord &chord);
+	};
+
+	std::ostream& operator<<(std::ostream &os, const Chord &chord);
+
+}
 
 #endif // CHORD_H
