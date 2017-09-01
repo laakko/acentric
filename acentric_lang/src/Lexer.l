@@ -19,6 +19,8 @@
     acentric_lang::location loc;
 
     #define YY_USER_ACTION loc.columns(yyleng);
+
+	using acentric_lang::Parser;
 %}
 
 %%
@@ -28,32 +30,32 @@
     loc.step();
 %}
 
-[ABCDEFG]       { return acentric_lang::Parser::make_BASIC_NOTE(*yytext, loc); }
-"R"             { return acentric_lang::Parser::make_REST(loc); }
-"#"             { return acentric_lang::Parser::make_SHARP(loc);}
-"b"             { return acentric_lang::Parser::make_FLAT(loc); }
-[PmMda]         { return acentric_lang::Parser::make_INTERVAL_TYPE(*yytext, loc); }
-"-"             { return acentric_lang::Parser::make_MINUS_SIGN(loc); }
-"+"             { return acentric_lang::Parser::make_PLUS_SIGN(loc); }
-"_"             { return acentric_lang::Parser::make_UNDERSCORE(loc); }
-[\.]+           { return acentric_lang::Parser::make_DOTS(strlen(yytext), loc); }
-"^"             { return acentric_lang::Parser::make_CARAT(loc); }
-"("             { return acentric_lang::Parser::make_LPAREN(loc); }
-")"             { return acentric_lang::Parser::make_RPAREN(loc); }
-":"				{ return acentric_lang::Parser::make_COLON(loc); }
-";"             { return acentric_lang::Parser::make_SEMICOLON(loc); }
-"0"             { return acentric_lang::Parser::make_ZERO(loc); }
+[ABCDEFG]       { return Parser::make_BASIC_NOTE(*yytext, loc); }
+"#"             { return Parser::make_SHARP(loc);}
+"0"             { return Parser::make_ZERO(loc); }
+"b"             { return Parser::make_FLAT(loc); }
+"R"             { return Parser::make_REST(loc); }
+[PmMda]         { return Parser::make_INTERVAL_TYPE(*yytext, loc); }
+"-"             { return Parser::make_MINUS_SIGN(loc); }
+"+"             { return Parser::make_PLUS_SIGN(loc); }
+"_"             { return Parser::make_UNDERSCORE(loc); }
+[\.]+           { return Parser::make_DOTS(strlen(yytext), loc); }
+"^"             { return Parser::make_CARAT(loc); }
+"("             { return Parser::make_LPAREN(loc); }
+")"             { return Parser::make_RPAREN(loc); }
+":"				{ return Parser::make_COLON(loc); }
+";"             { return Parser::make_SEMICOLON(loc); }
 
 [1-9][0-9]*  {
     int n = std::stoi(yytext); // TODO check out of range
-    return acentric_lang::Parser::make_POS_INTEGER(n, loc);
+    return Parser::make_POS_INTEGER(n, loc);
 }
 
 [ \t]+          { loc.step(); }
 \\\r?\n         { loc.lines (yyleng); loc.step(); }
-\r?\n           { loc.lines (yyleng); loc.step(); return acentric_lang::Parser::make_NEWLINE(loc); }
+\r?\n           { loc.lines (yyleng); loc.step(); return Parser::make_NEWLINE(loc); }
 .               { std::cout << "Unhandled character: " << yytext << std::endl; }
-<<EOF>>         { return acentric_lang::Parser::make_END(loc); }
+<<EOF>>         { return Parser::make_END(loc); }
 
 %%
 
@@ -65,5 +67,5 @@ acentric_lang::Lexer::Lexer(std::istream* in, std::ostream* out)
 int yyFlexLexer::yylex()
 {
     throw std::logic_error(
-        "The yylex() exists for technical reasons and must not be used.");
+        "yyFlexLexer::yylex() is unused in this flex/bison setup. Use acentric_lang::Lexer::lex() instead.");
 }

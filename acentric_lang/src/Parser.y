@@ -5,8 +5,7 @@
 %define parser_class_name {Parser}
 %define api.namespace {acentric_lang}
 
-/* add parser members (scanner, cb) and yylex parameters (loc, scanner) */
-%parse-param  {acentric_lang::Lexer* lexer} {acentric_lang::ParserResult* cb}
+%parse-param  {acentric_lang::Lexer* lexer} {acentric_lang::ParserResult* res}
 %locations
 
 %define api.token.constructor
@@ -50,7 +49,7 @@
     #define yylex lexer->lex
 
     #define INTERACTIVE_OUT(output) \
-        if (cb->interactive) std::cout << output << std::endl << "> ";
+        if (res->interactive) std::cout << output << std::endl << "> ";
 
 }
 
@@ -92,8 +91,8 @@
 %start root;
 
 root: %empty
-    | root note NEWLINE                       { cb->noteResult = $2; INTERACTIVE_OUT($2) }
-    | root interval NEWLINE                   { cb->intervalResult = $2; INTERACTIVE_OUT($2) }
+    | root note NEWLINE                       { res->noteResult = $2; INTERACTIVE_OUT($2) }
+    | root interval NEWLINE                   { res->intervalResult = $2; INTERACTIVE_OUT($2) }
     ;
 
 note: BASIC_NOTE offset octave                  { $$ = Note{$1, $2, $3}; }

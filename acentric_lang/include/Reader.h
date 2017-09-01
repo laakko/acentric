@@ -1,5 +1,5 @@
-#ifndef MUSIC_READER_H
-#define MUSIC_READER_H
+#ifndef READER_H
+#define READER_H
 
 # include <string>
 # include <vector>
@@ -7,15 +7,19 @@
 
 #include "Parser.hxx"
 
-class MusicReader : public acentric_lang::ParserResult
-{
-public:
-    static void ReadMusicInteractive(bool debug = false);
+namespace acentric_lang {
 
-    static Note readNote(const std::string&);
+	class Reader : public acentric_lang::ParserResult
+	{
+	public:
+		static void ReadMusicInteractive(bool debug = false);
 
-private:
-    static acentric_lang::ParserResult parse(const std::string&);
-};
+		static Note readNote(const std::string&);
 
-#endif // MUSIC_READER_H
+	private:
+		static acentric_lang::ParserResult parse(const std::string&);
+	};
+
+}
+
+#endif // READER_H
