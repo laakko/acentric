@@ -3,9 +3,10 @@
 %require  "3.0"
 
 %define parser_class_name {Parser}
+%define api.namespace {acentric_lang}
 
 /* add parser members (scanner, cb) and yylex parameters (loc, scanner) */
-%parse-param  {acentric_lang::Lexer* lexer} {ParserResult* cb}
+%parse-param  {acentric_lang::Lexer* lexer} {acentric_lang::ParserResult* cb}
 %locations
 
 %define api.token.constructor
@@ -29,12 +30,13 @@
 
     namespace acentric_lang {
         class Lexer; // (Forward declaration to avoid circular dependency)
-    };
-    
-    struct ParserResult {
-        bool interactive = false;
-        Note noteResult;
-        Interval intervalResult;
+
+		struct ParserResult {
+			bool interactive = false;
+			Note noteResult;
+			Interval intervalResult;
+		};
+
     };
 }
 
@@ -120,7 +122,7 @@ interval: INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{$1, $2}; }
 
 %%
 
-void yy::Parser::error(const yy::Parser::location_type& l, const std::string& m)
+void acentric_lang::Parser::error(const acentric_lang::Parser::location_type& l, const std::string& m)
 {
-    throw yy::Parser::syntax_error(l, m);
+    throw acentric_lang::Parser::syntax_error(l, m);
 }

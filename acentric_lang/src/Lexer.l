@@ -16,7 +16,7 @@
 		#include <unistd.h>
 	#endif
 
-    yy::location loc;
+    acentric_lang::location loc;
 
     #define YY_USER_ACTION loc.columns(yyleng);
 %}
@@ -28,32 +28,32 @@
     loc.step();
 %}
 
-[ABCDEFG]       { return yy::Parser::make_BASIC_NOTE(*yytext, loc); }
-"R"             { return yy::Parser::make_REST(loc); }
-"#"             { return yy::Parser::make_SHARP(loc);}
-"b"             { return yy::Parser::make_FLAT(loc); }
-[PmMda]         { return yy::Parser::make_INTERVAL_TYPE(*yytext, loc); }
-"-"             { return yy::Parser::make_MINUS_SIGN(loc); }
-"+"             { return yy::Parser::make_PLUS_SIGN(loc); }
-"_"             { return yy::Parser::make_UNDERSCORE(loc); }
-[\.]+           { return yy::Parser::make_DOTS(strlen(yytext), loc); }
-"^"             { return yy::Parser::make_CARAT(loc); }
-"("             { return yy::Parser::make_LPAREN(loc); }
-")"             { return yy::Parser::make_RPAREN(loc); }
-":"				{ return yy::Parser::make_COLON(loc); }
-";"             { return yy::Parser::make_SEMICOLON(loc); }
-"0"             { return yy::Parser::make_ZERO(loc); }
+[ABCDEFG]       { return acentric_lang::Parser::make_BASIC_NOTE(*yytext, loc); }
+"R"             { return acentric_lang::Parser::make_REST(loc); }
+"#"             { return acentric_lang::Parser::make_SHARP(loc);}
+"b"             { return acentric_lang::Parser::make_FLAT(loc); }
+[PmMda]         { return acentric_lang::Parser::make_INTERVAL_TYPE(*yytext, loc); }
+"-"             { return acentric_lang::Parser::make_MINUS_SIGN(loc); }
+"+"             { return acentric_lang::Parser::make_PLUS_SIGN(loc); }
+"_"             { return acentric_lang::Parser::make_UNDERSCORE(loc); }
+[\.]+           { return acentric_lang::Parser::make_DOTS(strlen(yytext), loc); }
+"^"             { return acentric_lang::Parser::make_CARAT(loc); }
+"("             { return acentric_lang::Parser::make_LPAREN(loc); }
+")"             { return acentric_lang::Parser::make_RPAREN(loc); }
+":"				{ return acentric_lang::Parser::make_COLON(loc); }
+";"             { return acentric_lang::Parser::make_SEMICOLON(loc); }
+"0"             { return acentric_lang::Parser::make_ZERO(loc); }
 
 [1-9][0-9]*  {
     int n = std::stoi(yytext); // TODO check out of range
-    return yy::Parser::make_POS_INTEGER(n, loc);
+    return acentric_lang::Parser::make_POS_INTEGER(n, loc);
 }
 
 [ \t]+          { loc.step(); }
 \\\r?\n         { loc.lines (yyleng); loc.step(); }
-\r?\n           { loc.lines (yyleng); loc.step(); return yy::Parser::make_NEWLINE(loc); }
+\r?\n           { loc.lines (yyleng); loc.step(); return acentric_lang::Parser::make_NEWLINE(loc); }
 .               { std::cout << "Unhandled character: " << yytext << std::endl; }
-<<EOF>>         { return yy::Parser::make_END(loc); }
+<<EOF>>         { return acentric_lang::Parser::make_END(loc); }
 
 %%
 

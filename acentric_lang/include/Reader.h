@@ -7,7 +7,7 @@
 
 #include "Parser.hxx"
 
-class MusicReader : public ParserResult
+class MusicReader : public acentric_lang::ParserResult
 {
 public:
     static void ReadMusicInteractive(bool debug = false);
@@ -15,7 +15,7 @@ public:
     static Note readNote(const std::string&);
 
 private:
-    static ParserResult parse(const std::string&);
+    static acentric_lang::ParserResult parse(const std::string&);
 };
 
 #endif // MUSIC_READER_H

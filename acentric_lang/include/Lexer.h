@@ -13,7 +13,7 @@
     yy::MusicParser::symbol_type yy::MusicLexer::lex(        \
                     yy::MusicParser::semantic_type* yylval,  \
                     yy::MusicParser::location_type* yylloc)
-#define YY_DECL yy::Parser::symbol_type acentric_lang::Lexer::lex()
+#define YY_DECL acentric_lang::Parser::symbol_type acentric_lang::Lexer::lex()
 
 namespace acentric_lang
 {
@@ -30,7 +30,7 @@ namespace acentric_lang
 
         //yy::MusicParser::symbol_type lex(MusicParser::semantic_type* yylval,
         //                                 MusicParser::location_type* yylloc);
-        yy::Parser::symbol_type lex();
+        acentric_lang::Parser::symbol_type lex();
     };
 }
 
