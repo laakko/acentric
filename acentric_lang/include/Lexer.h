@@ -3,7 +3,7 @@
 
 #undef yyFlexLexer
 #include <FlexLexer.h>
-#include "MusicParser.hxx"
+#include "Parser.hxx"
 
 // Tell flex which function to define
 #ifdef  YY_DECL

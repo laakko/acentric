@@ -15,27 +15,27 @@ endif (WIN32)
 find_package(BISON)
 find_package(FLEX)
 
-BISON_TARGET (MusicParser src/MusicParser.y ${CMAKE_CURRENT_BINARY_DIR}/MusicParser.cxx
-			  COMPILE_FLAGS "--defines=${CMAKE_CURRENT_BINARY_DIR}/MusicParser.hxx --report=all --report-file=${CMAKE_CURRENT_BINARY_DIR}/MusicParserStates.log")
+BISON_TARGET (Parser src/Parser.y ${CMAKE_CURRENT_BINARY_DIR}/Parser.cxx
+			  COMPILE_FLAGS "--defines=${CMAKE_CURRENT_BINARY_DIR}/Parser.hxx --report=all --report-file=${CMAKE_CURRENT_BINARY_DIR}/ParserStates.log")
 
-FLEX_TARGET  (MusicLexer src/MusicLexer.l ${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.cxx
-			  COMPILE_FLAGS --header-file=${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.hxx)
+FLEX_TARGET  (Lexer src/Lexer.l ${CMAKE_CURRENT_BINARY_DIR}/Lexer.cxx
+			  COMPILE_FLAGS --header-file=${CMAKE_CURRENT_BINARY_DIR}/Lexer.hxx)
 
-ADD_FLEX_BISON_DEPENDENCY(MusicLexer MusicParser)
+ADD_FLEX_BISON_DEPENDENCY(Lexer Parser)
 
-file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.hxx "") # HACK so cmake doesn't panic when the header isn't found
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/Lexer.hxx "") # HACK so cmake doesn't panic when the header isn't found
 
 #### Lexer/Parser ("acentric_lang") library
 add_library(acentric_lang
-	include/MusicReader.h
-	include/MusicLexer.h
-	${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.hxx
+	include/Reader.h
+	include/Lexer.h
+	${CMAKE_CURRENT_BINARY_DIR}/Lexer.hxx
 	
-	src/MusicReader.cpp	
-	src/MusicLexer.l
-	src/MusicParser.y
-	${CMAKE_CURRENT_BINARY_DIR}/MusicLexer.cxx
-	${CMAKE_CURRENT_BINARY_DIR}/MusicParser.cxx)
+	src/Reader.cpp	
+	src/Lexer.l
+	src/Parser.y
+	${CMAKE_CURRENT_BINARY_DIR}/Lexer.cxx
+	${CMAKE_CURRENT_BINARY_DIR}/Parser.cxx)
 	
 target_link_libraries(acentric_lang acentric_core)
 target_include_directories(acentric_lang

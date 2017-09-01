@@ -5,8 +5,8 @@
 
 %{
     #include <stdexcept>
-    #include "MusicParser.hxx"
-    #include "MusicLexer.h"
+    #include "Parser.hxx"
+    #include "Lexer.h"
 
 	#if _WIN32
 		#include <io.h> // Provides Windows version of isatty()

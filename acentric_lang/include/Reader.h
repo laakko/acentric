@@ -5,7 +5,7 @@
 # include <vector>
 #include "Note.h"
 
-# include "MusicParser.hxx"
+#include "Parser.hxx"
 
 class MusicReader : public MusicParserResult
 {

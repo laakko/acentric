@@ -43,7 +43,7 @@
     #include <utility>      // move
     #include <string>
 
-    #include "MusicLexer.h"
+    #include "Lexer.h"
 
     #define yylex lexer->lex
 

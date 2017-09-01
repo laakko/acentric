@@ -1,8 +1,8 @@
 #include <sstream>
 
-#include "MusicReader.h"
-#include "MusicParser.hxx"
-#include "MusicLexer.h"
+#include "Reader.h"
+#include "Parser.hxx"
+#include "Lexer.h"
 
 void MusicReader::ReadMusicInteractive(bool debug){
     MusicParserResult out;
