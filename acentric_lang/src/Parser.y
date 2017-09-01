@@ -5,7 +5,7 @@
 %define parser_class_name {MusicParser}
 
 /* add parser members (scanner, cb) and yylex parameters (loc, scanner) */
-%parse-param  {yy::MusicLexer* lexer} {MusicParserResult* cb}
+%parse-param  {acentric_lang::Lexer* lexer} {MusicParserResult* cb}
 %locations
 
 %define api.token.constructor
@@ -27,8 +27,8 @@
     #include "Interval.h"
     #include "BasicNote.h"
 
-    namespace yy {
-        class MusicLexer; // (Forward declaration to avoid circular dependency)
+    namespace acentric_lang {
+        class Lexer; // (Forward declaration to avoid circular dependency)
     };
     
     struct MusicParserResult {

@@ -13,10 +13,9 @@
     yy::MusicParser::symbol_type yy::MusicLexer::lex(        \
                     yy::MusicParser::semantic_type* yylval,  \
                     yy::MusicParser::location_type* yylloc)
-#define YY_DECL yy::MusicParser::symbol_type yy::MusicLexer::lex()
+#define YY_DECL yy::MusicParser::symbol_type acentric_lang::Lexer::lex()
 
-
-namespace yy
+namespace acentric_lang
 {
     // To feed data back to bison, the yylex method needs yylval and
     // yylloc parameters. Since the yyFlexLexer class is defined in the
@@ -24,10 +23,10 @@ namespace yy
     // can not be changed anymore. This makes it necessary to derive a
     // scanner class that provides a method with the desired signature:
 
-    class MusicLexer : public yyFlexLexer
+    class Lexer : public yyFlexLexer
     {
     public:
-        explicit MusicLexer(std::istream* in=0, std::ostream* out=0);
+        explicit Lexer(std::istream* in=0, std::ostream* out=0);
 
         //yy::MusicParser::symbol_type lex(MusicParser::semantic_type* yylval,
         //                                 MusicParser::location_type* yylloc);

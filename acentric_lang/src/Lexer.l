@@ -57,7 +57,7 @@
 
 %%
 
-yy::MusicLexer::MusicLexer(std::istream* in, std::ostream* out)
+acentric_lang::Lexer::Lexer(std::istream* in, std::ostream* out)
     : yyFlexLexer(in, out)
 {
 }

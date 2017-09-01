@@ -7,7 +7,7 @@
 void MusicReader::ReadMusicInteractive(bool debug){
     MusicParserResult out;
     out.interactive = true;
-    yy::MusicLexer lexer(&std::cin);
+    acentric_lang::Lexer lexer(&std::cin);
     yy::MusicParser parser(&lexer, &out);
 	
 	if (debug) {
@@ -23,7 +23,7 @@ void MusicReader::ReadMusicInteractive(bool debug){
 MusicParserResult MusicReader::parse(const std::string& expr){
     MusicParserResult out;
     std::istringstream in(expr);
-    yy::MusicLexer lexer(&in);
+    acentric_lang::Lexer lexer(&in);
     yy::MusicParser parser(&lexer, &out);
     parser.parse(); // TODO error check
     return out;
