@@ -5,7 +5,7 @@
 %define parser_class_name {Parser}
 %define api.namespace {acentric_lang}
 
-%parse-param  {acentric_lang::Lexer* lexer} {acentric_lang::ParserResult* res}
+%parse-param  {acentric_lang::Lexer* lexer} {acentric_lang::ParseResult* res}
 %locations
 
 %define api.token.constructor
@@ -30,7 +30,7 @@
     namespace acentric_lang {
         class Lexer; // (Forward declaration to avoid circular dependency)
 
-		struct ParserResult {
+		struct ParseResult {
 			bool interactive = false;
 			Note noteResult;
 			Interval intervalResult;

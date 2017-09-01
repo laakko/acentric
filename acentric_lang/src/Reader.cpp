@@ -6,8 +6,8 @@
 
 namespace acentric_lang {
 
-	void Reader::ReadMusicInteractive(bool debug) {
-		acentric_lang::ParserResult out;
+	void Reader::doInteractive(bool debug) {
+		acentric_lang::ParseResult out;
 		out.interactive = true;
 		acentric_lang::Lexer lexer(&std::cin);
 		acentric_lang::Parser parser(&lexer, &out);
@@ -22,8 +22,8 @@ namespace acentric_lang {
 		parser.parse();
 	}
 
-	acentric_lang::ParserResult Reader::parse(const std::string& expr) {
-		acentric_lang::ParserResult out;
+	acentric_lang::ParseResult Reader::parse(const std::string& expr) {
+		acentric_lang::ParseResult out;
 		std::istringstream in(expr);
 		acentric_lang::Lexer lexer(&in);
 		acentric_lang::Parser parser(&lexer, &out);

@@ -7,5 +7,5 @@ int main (int argc, char *argv[])
 {
     //auto result = MusicReader::readNote("C###4;");
     //std::cout << result << std::endl;
-    acentric_lang::Reader::ReadMusicInteractive();
+    acentric_lang::Reader::doInteractive();
 }

@@ -9,15 +9,15 @@
 
 namespace acentric_lang {
 
-	class Reader : public acentric_lang::ParserResult
+	class Reader : public acentric_lang::ParseResult
 	{
 	public:
-		static void ReadMusicInteractive(bool debug = false);
+		static void doInteractive(bool debug = false);
 
 		static Note readNote(const std::string&);
 
 	private:
-		static acentric_lang::ParserResult parse(const std::string&);
+		static acentric_lang::ParseResult parse(const std::string&);
 	};
 
 }

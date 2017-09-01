@@ -49,7 +49,7 @@ endif(WIN32)
 
 #### Interactive prompt
 add_executable(acentric_lang_interactive
-	src/mparse_main.cpp)
+	src/acentric_lang_interactive.cpp)
 target_link_libraries(acentric_lang_interactive acentric_lang)
 
 set_target_properties(acentric_lang acentric_lang_interactive PROPERTIES
