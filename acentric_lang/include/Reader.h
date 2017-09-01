@@ -12,12 +12,12 @@ namespace acentric_lang {
 	class Reader : public acentric_lang::ParseResult
 	{
 	public:
-		static void doInteractive(bool debug = false);
+		static void doInteractive(bool debug = false, std::ostream& err = std::cerr, std::ostream& out = std::cout, std::istream& in = std::cin);
 
-		static acentric_core::Note readNote(const std::string&);
+		acentric_core::Note readNote(const std::string&);
 
 	private:
-		static acentric_lang::ParseResult parse(const std::string&);
+		acentric_lang::ParseResult parse(const std::string&);
 	};
 
 }

@@ -1,5 +1,5 @@
-#ifndef MUSIC_LEXER_H
-#define MUSIC_LEXER_H
+#ifndef LEXER_H
+#define LEXER_H
 
 #undef yyFlexLexer
 #include <FlexLexer.h>
@@ -9,10 +9,7 @@
 #ifdef  YY_DECL
 # undef YY_DECL
 #endif
-//#define YY_DECL                                 \
-    yy::MusicParser::symbol_type yy::MusicLexer::lex(        \
-                    yy::MusicParser::semantic_type* yylval,  \
-                    yy::MusicParser::location_type* yylloc)
+
 #define YY_DECL acentric_lang::Parser::symbol_type acentric_lang::Lexer::lex()
 
 namespace acentric_lang
@@ -26,12 +23,10 @@ namespace acentric_lang
     class Lexer : public yyFlexLexer
     {
     public:
-        explicit Lexer(std::istream* in=0, std::ostream* out=0);
+        explicit Lexer(std::istream& in = std::cin, std::ostream& out = std::cout);
 
-        //yy::MusicParser::symbol_type lex(MusicParser::semantic_type* yylval,
-        //                                 MusicParser::location_type* yylloc);
-        acentric_lang::Parser::symbol_type lex();
+        acentric_lang::Parser::symbol_type lex(); // TODO figure out location reporting (make sure it works correctly)
     };
 }
 
-#endif // MUSIC_LEXER_H
+#endif // LEXER_H

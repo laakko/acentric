@@ -59,8 +59,8 @@
 
 %%
 
-acentric_lang::Lexer::Lexer(std::istream* in, std::ostream* out)
-    : yyFlexLexer(in, out)
+acentric_lang::Lexer::Lexer(std::istream& in, std::ostream& out)
+    : yyFlexLexer(&in, &out)
 {
 }
 
