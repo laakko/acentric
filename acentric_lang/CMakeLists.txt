@@ -1,15 +1,28 @@
 #### Find Flex/Bison
 # TODO make all the flex/bison stuff optional
 if (WIN32)
-	message("Windows detected, finding Cygwin and flex.exe/bison.exe")
+	message(STATUS "Windows detected, finding Cygwin and flex.exe/bison.exe")
 
 	find_package(cygwin REQUIRED)
 
 	# TODO check to make sure the following files exist, error if not (tell user to add flex/bison to cygwin)
-	set(FLEX_EXECUTABLE "${CYGWIN_INSTALL_PATH}/bin/flex.exe")
-	set(FLEX_INCLUDE_DIR "${CYGWIN_INSTALL_PATH}/usr/include")
-	set(FL_LIBRARY "${CYGWIN_INSTALL_PATH}/lib/libfl.a")
-	set(BISON_EXECUTABLE "${CYGWIN_INSTALL_PATH}/bin/bison.exe")
+	if (EXISTS "${CYGWIN_INSTALL_PATH}/bin/flex.exe")
+		set(FLEX_EXECUTABLE "${CYGWIN_INSTALL_PATH}/bin/flex.exe")
+	else()
+		message(FATAL_ERROR "${CYGWIN_INSTALL_PATH}/bin/flex.exe not found. Reconfigure Cygwin to include Flex to fix this error.")
+	endif()
+	
+	if (EXISTS "${CYGWIN_INSTALL_PATH}/usr/include/FlexLexer.h")
+		set(FLEX_INCLUDE_DIR "${CYGWIN_INSTALL_PATH}/usr/include")
+	else()
+		message(FATAL_ERROR "${CYGWIN_INSTALL_PATH}/usr/include/FlexLexer.h not found. Reconfigure Cygwin to include Flex to fix this error.")
+	endif()
+	
+	if (EXISTS "${CYGWIN_INSTALL_PATH}/bin/bison.exe")
+		set(BISON_EXECUTABLE "${CYGWIN_INSTALL_PATH}/bin/bison.exe")
+	else()
+		message(FATAL_ERROR "${CYGWIN_INSTALL_PATH}/bin/bison.exe not found. Reconfigure Cygwin to include Bison to fix this error.")
+	endif()
 endif (WIN32)
 
 find_package(BISON)
