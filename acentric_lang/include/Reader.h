@@ -7,7 +7,7 @@
 
 #include "Parser.hxx"
 
-class MusicReader : public MusicParserResult
+class MusicReader : public ParserResult
 {
 public:
     static void ReadMusicInteractive(bool debug = false);
@@ -15,7 +15,7 @@ public:
     static Note readNote(const std::string&);
 
 private:
-    static MusicParserResult parse(const std::string&);
+    static ParserResult parse(const std::string&);
 };
 
 #endif // MUSIC_READER_H

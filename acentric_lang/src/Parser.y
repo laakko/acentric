@@ -2,10 +2,10 @@
 %skeleton "lalr1.cc"
 %require  "3.0"
 
-%define parser_class_name {MusicParser}
+%define parser_class_name {Parser}
 
 /* add parser members (scanner, cb) and yylex parameters (loc, scanner) */
-%parse-param  {acentric_lang::Lexer* lexer} {MusicParserResult* cb}
+%parse-param  {acentric_lang::Lexer* lexer} {ParserResult* cb}
 %locations
 
 %define api.token.constructor
@@ -31,7 +31,7 @@
         class Lexer; // (Forward declaration to avoid circular dependency)
     };
     
-    struct MusicParserResult {
+    struct ParserResult {
         bool interactive = false;
         Note noteResult;
         Interval intervalResult;
@@ -120,7 +120,7 @@ interval: INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{$1, $2}; }
 
 %%
 
-void yy::MusicParser::error(const yy::MusicParser::location_type& l, const std::string& m)
+void yy::Parser::error(const yy::Parser::location_type& l, const std::string& m)
 {
-    throw yy::MusicParser::syntax_error(l, m);
+    throw yy::Parser::syntax_error(l, m);
 }

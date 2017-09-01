@@ -28,32 +28,32 @@
     loc.step();
 %}
 
-[ABCDEFG]       { return yy::MusicParser::make_BASIC_NOTE(*yytext, loc); }
-"R"             { return yy::MusicParser::make_REST(loc); }
-"#"             { return yy::MusicParser::make_SHARP(loc);}
-"b"             { return yy::MusicParser::make_FLAT(loc); }
-[PmMda]         { return yy::MusicParser::make_INTERVAL_TYPE(*yytext, loc); }
-"-"             { return yy::MusicParser::make_MINUS_SIGN(loc); }
-"+"             { return yy::MusicParser::make_PLUS_SIGN(loc); }
-"_"             { return yy::MusicParser::make_UNDERSCORE(loc); }
-[\.]+           { return yy::MusicParser::make_DOTS(strlen(yytext), loc); }
-"^"             { return yy::MusicParser::make_CARAT(loc); }
-"("             { return yy::MusicParser::make_LPAREN(loc); }
-")"             { return yy::MusicParser::make_RPAREN(loc); }
-":"				{ return yy::MusicParser::make_COLON(loc); }
-";"             { return yy::MusicParser::make_SEMICOLON(loc); }
-"0"             { return yy::MusicParser::make_ZERO(loc); }
+[ABCDEFG]       { return yy::Parser::make_BASIC_NOTE(*yytext, loc); }
+"R"             { return yy::Parser::make_REST(loc); }
+"#"             { return yy::Parser::make_SHARP(loc);}
+"b"             { return yy::Parser::make_FLAT(loc); }
+[PmMda]         { return yy::Parser::make_INTERVAL_TYPE(*yytext, loc); }
+"-"             { return yy::Parser::make_MINUS_SIGN(loc); }
+"+"             { return yy::Parser::make_PLUS_SIGN(loc); }
+"_"             { return yy::Parser::make_UNDERSCORE(loc); }
+[\.]+           { return yy::Parser::make_DOTS(strlen(yytext), loc); }
+"^"             { return yy::Parser::make_CARAT(loc); }
+"("             { return yy::Parser::make_LPAREN(loc); }
+")"             { return yy::Parser::make_RPAREN(loc); }
+":"				{ return yy::Parser::make_COLON(loc); }
+";"             { return yy::Parser::make_SEMICOLON(loc); }
+"0"             { return yy::Parser::make_ZERO(loc); }
 
 [1-9][0-9]*  {
     int n = std::stoi(yytext); // TODO check out of range
-    return yy::MusicParser::make_POS_INTEGER(n, loc);
+    return yy::Parser::make_POS_INTEGER(n, loc);
 }
 
 [ \t]+          { loc.step(); }
 \\\r?\n         { loc.lines (yyleng); loc.step(); }
-\r?\n           { loc.lines (yyleng); loc.step(); return yy::MusicParser::make_NEWLINE(loc); }
+\r?\n           { loc.lines (yyleng); loc.step(); return yy::Parser::make_NEWLINE(loc); }
 .               { std::cout << "Unhandled character: " << yytext << std::endl; }
-<<EOF>>         { return yy::MusicParser::make_END(loc); }
+<<EOF>>         { return yy::Parser::make_END(loc); }
 
 %%
 

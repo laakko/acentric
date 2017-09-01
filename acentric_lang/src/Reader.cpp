@@ -5,10 +5,10 @@
 #include "Lexer.h"
 
 void MusicReader::ReadMusicInteractive(bool debug){
-    MusicParserResult out;
+    ParserResult out;
     out.interactive = true;
     acentric_lang::Lexer lexer(&std::cin);
-    yy::MusicParser parser(&lexer, &out);
+    yy::Parser parser(&lexer, &out);
 	
 	if (debug) {
 		parser.set_debug_stream(std::cout);
@@ -20,11 +20,11 @@ void MusicReader::ReadMusicInteractive(bool debug){
     parser.parse();
 }
 
-MusicParserResult MusicReader::parse(const std::string& expr){
-    MusicParserResult out;
+ParserResult MusicReader::parse(const std::string& expr){
+    ParserResult out;
     std::istringstream in(expr);
     acentric_lang::Lexer lexer(&in);
-    yy::MusicParser parser(&lexer, &out);
+    yy::Parser parser(&lexer, &out);
     parser.parse(); // TODO error check
     return out;
 }
