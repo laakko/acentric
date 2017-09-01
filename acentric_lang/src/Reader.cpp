@@ -31,7 +31,7 @@ namespace acentric_lang {
 		return out;
 	}
 
-	Note Reader::readNote(const std::string& expr) {
+	acentric_core::Note Reader::readNote(const std::string& expr) {
 		return Reader::parse(expr).noteResult;
 	}
 

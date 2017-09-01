@@ -32,8 +32,8 @@
 
 		struct ParseResult {
 			bool interactive = false;
-			Note noteResult;
-			Interval intervalResult;
+			acentric_core::Note noteResult;
+			acentric_core::Interval intervalResult;
 		};
 
     };
@@ -80,8 +80,8 @@
 %token <int> DOTS
 %type <int> octave
 %type <int> offset
-%type <Note> note
-%type <Interval> interval
+%type <acentric_core::Note> note
+%type <acentric_core::Interval> interval
 
 %left COLON
 %left MINUS_SIGN PLUS_SIGN
@@ -95,7 +95,7 @@ root: %empty
     | root interval NEWLINE                   { res->intervalResult = $2; INTERACTIVE_OUT($2) }
     ;
 
-note: BASIC_NOTE offset octave                  { $$ = Note{$1, $2, $3}; }
+note: BASIC_NOTE offset octave                  { $$ = acentric_core::Note{$1, $2, $3}; }
     | note PLUS_SIGN interval					{ $$ = $1 + $3; }
 	| note MINUS_SIGN interval					{ $$ = $1 - $3; }
 	| interval PLUS_SIGN note					{ $$ = $3 + $1; }
@@ -111,9 +111,9 @@ octave: %empty                                  { $$ = 4; }
 	| ZERO										{ $$ = 0; }
     ;
 
-interval: INTERVAL_TYPE POS_INTEGER                   { $$ = Interval{$1, $2}; }
-	| LPAREN INTERVAL_TYPE PLUS_SIGN POS_INTEGER RPAREN POS_INTEGER		{ $$ = Interval{$2, $6, $4}; }
-	| LPAREN INTERVAL_TYPE MINUS_SIGN POS_INTEGER RPAREN POS_INTEGER	{ $$ = Interval{$2, $6, -$4}; }
+interval: INTERVAL_TYPE POS_INTEGER                   { $$ = acentric_core::Interval{$1, $2}; }
+	| LPAREN INTERVAL_TYPE PLUS_SIGN POS_INTEGER RPAREN POS_INTEGER		{ $$ = acentric_core::Interval{$2, $6, $4}; }
+	| LPAREN INTERVAL_TYPE MINUS_SIGN POS_INTEGER RPAREN POS_INTEGER	{ $$ = acentric_core::Interval{$2, $6, -$4}; }
 	| note COLON note							{ $$ = $1.getInterval($3); }
 	| interval PLUS_SIGN interval				{ $$ = $1 + $3; }
 	| interval MINUS_SIGN interval				{ $$ = $1 - $3; }

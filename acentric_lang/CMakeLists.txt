@@ -23,13 +23,15 @@ FLEX_TARGET  (Lexer src/Lexer.l ${CMAKE_CURRENT_BINARY_DIR}/Lexer.cxx
 
 ADD_FLEX_BISON_DEPENDENCY(Lexer Parser)
 
-file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/Lexer.hxx "") # HACK so cmake doesn't panic when the header isn't found
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/Lexer.hxx "")  # HACK so cmake doesn't panic when the headers aren't found
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/Parser.hxx "") # (flex/bison just haven't generated them yet)
 
 #### Lexer/Parser ("acentric_lang") library
 add_library(acentric_lang
 	include/Reader.h
 	include/Lexer.h
 	${CMAKE_CURRENT_BINARY_DIR}/Lexer.hxx
+	${CMAKE_CURRENT_BINARY_DIR}/Parser.hxx
 	
 	src/Reader.cpp	
 	src/Lexer.l

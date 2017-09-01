@@ -14,7 +14,7 @@ namespace acentric_lang {
 	public:
 		static void doInteractive(bool debug = false);
 
-		static Note readNote(const std::string&);
+		static acentric_core::Note readNote(const std::string&);
 
 	private:
 		static acentric_lang::ParseResult parse(const std::string&);
