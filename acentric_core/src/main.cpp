@@ -12,10 +12,10 @@
 int main() {
 	using namespace acentric_core;
 
-	DiatonicScale csLocrian{ Note("C#"), BasicScale::Locrian };
+	DiatonicScale csLocrian{ Note{'A'}, BasicScale::Locrian };
 	std::cout << csLocrian << std::endl;
 
-	Chord dsMaj{ Note{"D#"}, BasicChord::maj };
+	Chord dsMaj{ Note{'D', 1}, BasicChord::maj };
 	std::cout << dsMaj << std::endl;
 
 	int i;

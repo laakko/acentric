@@ -63,7 +63,7 @@ namespace acentric_core {
 
 		In either notation, *the letter name must be given as a capital letter* to avoid ambiguity with the lower-case b character. (Is bbb b-double-flat, or is it just three flats?)
 		This limitation may be eased in the future. */
-		Note(const std::string & textNote); // TODO clean up, it's really ugly
+		Note(const std::string & textNote); // TODO delete entirely, adjust documentation
 
 		/*! Returns a Note based on the given interval being added to this note.
 		For example, Note("C4") + Interval("M3") evaluates to Note("F4"). */

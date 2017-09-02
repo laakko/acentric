@@ -1,11 +1,10 @@
 #### Find Flex/Bison
-# TODO make all the flex/bison stuff optional
+# TODO make all the flex/bison stuff optional, also better searching for win_flex.exe and win_bison.exe (don't force using Cygwin)
 if (WIN32)
 	message(STATUS "Windows detected, finding Cygwin and flex.exe/bison.exe")
 
 	find_package(cygwin REQUIRED)
 
-	# TODO check to make sure the following files exist, error if not (tell user to add flex/bison to cygwin)
 	if (EXISTS "${CYGWIN_INSTALL_PATH}/bin/flex.exe")
 		set(FLEX_EXECUTABLE "${CYGWIN_INSTALL_PATH}/bin/flex.exe")
 	else()
@@ -25,8 +24,8 @@ if (WIN32)
 	endif()
 endif (WIN32)
 
-find_package(BISON)
-find_package(FLEX)
+find_package(BISON REQUIRED)
+find_package(FLEX REQUIRED)
 
 BISON_TARGET (Parser src/Parser.y ${CMAKE_CURRENT_BINARY_DIR}/Parser.cxx
 			  COMPILE_FLAGS "--defines=${CMAKE_CURRENT_BINARY_DIR}/Parser.hxx --report=all --report-file=${CMAKE_CURRENT_BINARY_DIR}/ParserStates.log")

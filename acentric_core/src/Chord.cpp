@@ -7,55 +7,77 @@ namespace acentric_core {
 	{
 		switch (chord) {
 		case BasicChord::maj:
-			pitches = Interval::makeIntervalVector("M3 P5");
+			pitches.push_back(Interval{ 'M', 3 });
+			pitches.push_back(Interval{ 'P', 5 });
 			break;
 
 		case BasicChord::min:
-			pitches = Interval::makeIntervalVector("m3 P5");
+			pitches.push_back(Interval{ 'm', 3 });
+			pitches.push_back(Interval{ 'P', 5 });
 			break;
 
 		case BasicChord::aug:
-			pitches = Interval::makeIntervalVector("M3 A5");
+			pitches.push_back(Interval{ 'M', 3 });
+			pitches.push_back(Interval{ 'a', 5 });
 			break;
 
 		case BasicChord::dim:
-			pitches = Interval::makeIntervalVector("m3 d5");
+			pitches.push_back(Interval{ 'm', 3 });
+			pitches.push_back(Interval{ 'd', 5 });
 			break;
 
 		case BasicChord::maj6:
-			pitches = Interval::makeIntervalVector("M3 P5 M6");
+			pitches.push_back(Interval{ 'M', 3 });
+			pitches.push_back(Interval{ 'P', 5 });
+			pitches.push_back(Interval{ 'M', 6 });
 			break;
 
 		case BasicChord::min6:
-			pitches = Interval::makeIntervalVector("m3 P5 M6");
+			pitches.push_back(Interval{ 'm', 3 });
+			pitches.push_back(Interval{ 'P', 5 });
+			pitches.push_back(Interval{ 'M', 6 });
 			break;
 
 		case BasicChord::dom7:
-			pitches = Interval::makeIntervalVector("M3 P5 m7");
+			pitches.push_back(Interval{ 'M', 3 });
+			pitches.push_back(Interval{ 'P', 5 });
+			pitches.push_back(Interval{ 'm', 7 });
 			break;
 
 		case BasicChord::maj7:
-			pitches = Interval::makeIntervalVector("M3 P5 M7");
+			pitches.push_back(Interval{ 'M', 3 });
+			pitches.push_back(Interval{ 'P', 5 });
+			pitches.push_back(Interval{ 'M', 7 });
 			break;
 
 		case BasicChord::min7:
-			pitches = Interval::makeIntervalVector("m3 P5 m7");
+			pitches.push_back(Interval{ 'm', 3 });
+			pitches.push_back(Interval{ 'P', 5 });
+			pitches.push_back(Interval{ 'm', 7 });
 			break;
 
 		case BasicChord::aug7:
-			pitches = Interval::makeIntervalVector("M3 A5 m7");
+			pitches.push_back(Interval{ 'M', 3 });
+			pitches.push_back(Interval{ 'a', 5 });
+			pitches.push_back(Interval{ 'm', 7 });
 			break;
 
 		case BasicChord::dim7:
-			pitches = Interval::makeIntervalVector("m3 d5 d7");
+			pitches.push_back(Interval{ 'm', 3 });
+			pitches.push_back(Interval{ 'd', 5 });
+			pitches.push_back(Interval{ 'd', 7 });
 			break;
 
 		case BasicChord::halfdim7:
-			pitches = Interval::makeIntervalVector("m3 d5 m7");
+			pitches.push_back(Interval{ 'm', 3 });
+			pitches.push_back(Interval{ 'd', 5 });
+			pitches.push_back(Interval{ 'm', 7 });
 			break;
 
 		case BasicChord::min_maj7:
-			pitches = Interval::makeIntervalVector("m3 P5 M7");
+			pitches.push_back(Interval{ 'm', 3 });
+			pitches.push_back(Interval{ 'P', 5 });
+			pitches.push_back(Interval{ 'M', 7 });
 			break;
 
 		}
@@ -68,10 +90,10 @@ namespace acentric_core {
 		if (pitches.size() == 0) throw "Empty Interval vector passed to Chord ctor";
 
 		int prevDistance = pitches.at(0).getBasicDistance();
-		if (prevDistance == 0) throw "P1 or d2 in Interval vector passed to Chord ctor (duplicates root note)";
+		if (prevDistance == 0) throw "P1 or d2 in Interval vector passed to Chord ctor (duplicates root note)"; // TODO confusing error message, fix
 
 		for (int i = 1; i < pitches.size(); ++i) {
-			if (!(pitches.at(i).getBasicDistance() > prevDistance)) throw "Non-increasing Interval vector passed to Chord ctor";
+			if (!(pitches.at(i).getBasicDistance() > prevDistance)) throw "Non-increasing Interval vector passed to Chord ctor"; // TODO maybe try sorting?
 			prevDistance = pitches.at(i).getBasicDistance();
 		}
 		this->pitches = pitches;

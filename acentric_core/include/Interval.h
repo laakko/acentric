@@ -49,7 +49,7 @@ namespace acentric_core {
 		- P for perfect
 		- M for major
 		- m for minor
-		- A for augmented
+		- a for augmented (lower-case to avoid ambiguity with the note name A)
 		- d for diminished
 
 		The interval number is the number of notes encompassed in the interval. For example, an interval between A4 and E4 would have an interval number of 5.
@@ -63,7 +63,7 @@ namespace acentric_core {
 		- If the letter is P: `n` is valid iff `n mod 7 = 1, 4, or 5`.
 		- If the letter is M: `n` is valid iff `n mod 7 = 2, 3, 6, or 7`.
 		- If the letter is m: `n` is valid iff `n mod 7 = 2, 3, 6, or 7`.
-		- If the letter is A: `n` is valid for all positive integers
+		- If the letter is a: `n` is valid for all positive integers
 		- If the letter is d: `n` is valid for all positive integers except 1 (a d1 interval would result in a negative semitone distance)
 
 		## Parenthesis Notation
@@ -80,10 +80,10 @@ namespace acentric_core {
 		- A positive integer for the interval number
 
 		As above, P is valid for interval numbers congruent to 1, 4, and 5, (mod 7), and M is valid for interval numbers congruent to 2, 3, 6, and 7 (mod 7).
-		m, A, and d are not valid letters in this context; parenthesis notation is based on distance from the perfect or major interval.
+		m, a, and d are not valid letters in this context; parenthesis notation is based on distance from the perfect or major interval.
 
 		Additionally, no interval with a negative semitone distance is allowed. The interval (P-7)4 will cause an error. */
-		Interval(std::string commonName);
+		Interval(std::string commonName); // TODO remove, adjust documentation
 
 		/*! Takes a string of intervals and returns a vector containing, in order, the Intervals in the string. This is useful for building scales and chords.
 
@@ -92,7 +92,7 @@ namespace acentric_core {
 
 		At the parsing stage, invalid intervals such as P3 or M4 are accepted and passed directly to the Interval constructor, which will then reject them and cause an error.
 		For example, makeIntervalVector("M2 P3") would cause an error. */
-		static std::vector<Interval> makeIntervalVector(std::string intervals);
+		static std::vector<Interval> makeIntervalVector(std::string intervals); // TODO remove, adjust documentation
 
 		//Interval getInversion() const; // TODO implement
 

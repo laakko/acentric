@@ -28,32 +28,67 @@ namespace acentric_core {
 		switch (scale) {
 		case BasicScale::Aeolian:
 		case BasicScale::Minor:
-			degrees = Interval::makeIntervalVector("M2 m3 P4 P5 m6 m7");
+			degrees.push_back(Interval{ 'M', 2 });
+			degrees.push_back(Interval{ 'm', 3 });
+			degrees.push_back(Interval{ 'P', 4 });
+			degrees.push_back(Interval{ 'P', 5 });
+			degrees.push_back(Interval{ 'm', 6 });
+			degrees.push_back(Interval{ 'm', 7 });
 			break;
 
 		case BasicScale::Dorian:
-			degrees = Interval::makeIntervalVector("M2 m3 P4 P5 M6 m7");
+			degrees.push_back(Interval{ 'M', 2 });
+			degrees.push_back(Interval{ 'm', 3 });
+			degrees.push_back(Interval{ 'P', 4 });
+			degrees.push_back(Interval{ 'P', 5 });
+			degrees.push_back(Interval{ 'M', 6 });
+			degrees.push_back(Interval{ 'm', 7 });
 			break;
 
 		case BasicScale::Ionian:
 		case BasicScale::Major:
-			degrees = Interval::makeIntervalVector("M2 M3 P4 P5 M6 M7");
+			degrees.push_back(Interval{ 'M', 2 });
+			degrees.push_back(Interval{ 'M', 3 });
+			degrees.push_back(Interval{ 'P', 4 });
+			degrees.push_back(Interval{ 'P', 5 });
+			degrees.push_back(Interval{ 'M', 6 });
+			degrees.push_back(Interval{ 'M', 7 });
 			break;
 
 		case BasicScale::Locrian:
-			degrees = Interval::makeIntervalVector("m2 m3 P4 d5 m6 m7");
+			degrees.push_back(Interval{ 'm', 2 });
+			degrees.push_back(Interval{ 'm', 3 });
+			degrees.push_back(Interval{ 'P', 4 });
+			degrees.push_back(Interval{ 'd', 5 });
+			degrees.push_back(Interval{ 'm', 6 });
+			degrees.push_back(Interval{ 'm', 7 });
 			break;
 
 		case BasicScale::Lydian:
-			degrees = Interval::makeIntervalVector("M2 M3 A4 P5 M6 M7");
+			degrees.push_back(Interval{ 'M', 2 });
+			degrees.push_back(Interval{ 'M', 3 });
+			degrees.push_back(Interval{ 'a', 4 });
+			degrees.push_back(Interval{ 'P', 5 });
+			degrees.push_back(Interval{ 'M', 6 });
+			degrees.push_back(Interval{ 'M', 7 });
 			break;
 
 		case BasicScale::Mixolydian:
-			degrees = Interval::makeIntervalVector("M2 M3 P4 P5 M6 m7");
+			degrees.push_back(Interval{ 'M', 2 });
+			degrees.push_back(Interval{ 'M', 3 });
+			degrees.push_back(Interval{ 'P', 4 });
+			degrees.push_back(Interval{ 'P', 5 });
+			degrees.push_back(Interval{ 'M', 6 });
+			degrees.push_back(Interval{ 'm', 7 });
 			break;
 
 		case BasicScale::Phrygian:
-			degrees = Interval::makeIntervalVector("m2 m3 P4 P5 m6 m7");
+			degrees.push_back(Interval{ 'm', 2 });
+			degrees.push_back(Interval{ 'm', 3 });
+			degrees.push_back(Interval{ 'P', 4 });
+			degrees.push_back(Interval{ 'P', 5 });
+			degrees.push_back(Interval{ 'm', 6 });
+			degrees.push_back(Interval{ 'm', 7 });
 			break;
 		}
 	}
