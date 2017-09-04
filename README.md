@@ -4,7 +4,7 @@ This is a work-in-progress library for music theory analysis. Its purpose is to 
 
 The library will serve as a (hopefully) efficient, well-documented *back-end for other programs/interfaces*.
 
-Some initial features:
+One such interface is included in the project: a parser for the in-development Acentric language. Some initial features of the parser:
 
 ![Screenshot of Acentric Features](/initial_feature_samples.png)
 
