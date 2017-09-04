@@ -24,8 +24,9 @@ namespace acentric_lang
     {
     public:
         explicit Lexer(std::istream& in = std::cin, std::ostream& out = std::cout);
-
         acentric_lang::Parser::symbol_type lex(); // TODO figure out location reporting (make sure it works correctly)
+
+		std::ostream& getyyout() { return yyout; } // For use by the parser, so it will automatically have the same ostream as the lexer
     };
 }
 

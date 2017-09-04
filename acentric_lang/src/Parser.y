@@ -49,7 +49,10 @@
     #define yylex lexer->lex
 
     #define INTERACTIVE_OUT(output) \
-        if (res->interactive) std::cout << output << std::endl << "> ";
+        if (res->interactive) lexer->getyyout() << output << std::endl << "> ";
+
+	#define INTERACTIVE_PROMPT \
+		if (res->interactive) lexer->getyyout() << "> ";
 
 }
 
@@ -91,8 +94,9 @@
 %start root;
 
 root: %empty
-    | root note NEWLINE                       { res->noteResult = $2; INTERACTIVE_OUT($2) }
-    | root interval NEWLINE                   { res->intervalResult = $2; INTERACTIVE_OUT($2) }
+    | root note NEWLINE							{ res->noteResult = $2; INTERACTIVE_OUT($2) }
+    | root interval NEWLINE						{ res->intervalResult = $2; INTERACTIVE_OUT($2) }
+	| root NEWLINE								{ INTERACTIVE_PROMPT }
     ;
 
 note: BASIC_NOTE offset octave                  { $$ = acentric_core::Note{$1, $2, $3}; }
@@ -101,19 +105,17 @@ note: BASIC_NOTE offset octave                  { $$ = acentric_core::Note{$1, $
 	| interval PLUS_SIGN note					{ $$ = $3 + $1; }
     ;
 
-offset: %empty                                  { $$ = 0; }
-    | FLAT offset                               { $$ = $2 - 1; }
-    | SHARP offset                              { $$ = $2 + 1; }
+offset: %empty									{ $$ = 0; }
+    | FLAT offset								{ $$ = $2 - 1; }
+    | SHARP offset								{ $$ = $2 + 1; }
     ;
 
-octave: %empty                                  { $$ = 4; }
-    | POS_INTEGER                               { $$ = $1; }
+octave: %empty									{ $$ = 4; }
+    | POS_INTEGER								{ $$ = $1; }
 	| ZERO										{ $$ = 0; }
     ;
 
-interval: INTERVAL_TYPE POS_INTEGER                   { $$ = acentric_core::Interval{$1, $2}; }
-	| LPAREN INTERVAL_TYPE PLUS_SIGN POS_INTEGER RPAREN POS_INTEGER		{ $$ = acentric_core::Interval{$2, $6, $4}; }
-	| LPAREN INTERVAL_TYPE MINUS_SIGN POS_INTEGER RPAREN POS_INTEGER	{ $$ = acentric_core::Interval{$2, $6, -$4}; }
+interval: INTERVAL_TYPE POS_INTEGER				{ $$ = acentric_core::Interval{$1, $2}; }
 	| note COLON note							{ $$ = $1.getInterval($3); }
 	| interval PLUS_SIGN interval				{ $$ = $1 + $3; }
 	| interval MINUS_SIGN interval				{ $$ = $1 - $3; }

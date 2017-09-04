@@ -17,22 +17,34 @@ namespace acentric_lang {
 			parser.set_debug_level(1);
 		}
 
-		std::cout << "Welcome to Acentric" << std::endl << "> ";
+		out << "Welcome to Acentric" << std::endl << "> ";
 
-		parser.parse();
+		while (true) {
+			try {
+				parser.parse();
+			}
+			catch (const char* s) { // TODO replace with actual exception from acentric core (when implemented)
+				out << s << std::endl << "> ";
+				continue;
+			}
+			catch (const Parser::syntax_error& e) {
+				out << e.what() << std::endl << "> ";
+				continue;
+			}
+		}
 	}
 
 	acentric_lang::ParseResult Reader::parse(const std::string& expr) {
-		acentric_lang::ParseResult out;
+		acentric_lang::ParseResult result;
 		std::istringstream in(expr);
 		acentric_lang::Lexer lexer(in);
-		acentric_lang::Parser parser(&lexer, &out);
+		acentric_lang::Parser parser(&lexer, &result);
 		parser.parse(); // TODO error check
-		return out;
+		return result;
 	}
 
 	acentric_core::Note Reader::readNote(const std::string& expr) {
-		return Reader::parse(expr).noteResult;
+		return Reader::parse(expr).noteResult; // TODO find a way to warn if input type doesn't match what's being returned
 	}
 
 }

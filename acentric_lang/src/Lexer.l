@@ -51,10 +51,10 @@
     return Parser::make_POS_INTEGER(n, loc);
 }
 
-[ \t]+          { loc.step(); }
-\\\r?\n         { loc.lines (yyleng); loc.step(); }
-\r?\n           { loc.lines (yyleng); loc.step(); return Parser::make_NEWLINE(loc); }
-.               { std::cout << "Unhandled character: " << yytext << std::endl; }
+[ \t]           { loc.step(); }
+\\\r?\n         { loc.lines(); loc.step(); }
+\r?\n           { loc.lines(); loc.step(); return Parser::make_NEWLINE(loc); }
+.               { yyout << "Unhandled character: " << yytext << std::endl; }
 <<EOF>>         { return Parser::make_END(loc); }
 
 %%
