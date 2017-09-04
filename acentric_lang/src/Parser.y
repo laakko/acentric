@@ -51,7 +51,7 @@
     #define INTERACTIVE_OUT(output) \
         if (res->interactive) lexer->getyyout() << output << std::endl << "> ";
 
-	#define INTERACTIVE_PROMPT \
+	#define INTERACTIVE_PROMPT_NEWLINE \
 		if (res->interactive) lexer->getyyout() << "> ";
 
 }
@@ -96,7 +96,7 @@
 root: %empty
     | root note NEWLINE							{ res->noteResult = $2; INTERACTIVE_OUT($2) }
     | root interval NEWLINE						{ res->intervalResult = $2; INTERACTIVE_OUT($2) }
-	| root NEWLINE								{ INTERACTIVE_PROMPT }
+	| root NEWLINE								{ INTERACTIVE_PROMPT_NEWLINE }
     ;
 
 note: BASIC_NOTE offset octave                  { $$ = acentric_core::Note{$1, $2, $3}; }

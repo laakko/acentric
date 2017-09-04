@@ -24,11 +24,11 @@ namespace acentric_lang {
 				parser.parse();
 			}
 			catch (const char* s) { // TODO replace with actual exception from acentric core (when implemented)
-				out << s << std::endl << "> ";
+				out << s << std::endl;
 				continue;
 			}
 			catch (const Parser::syntax_error& e) {
-				out << e.what() << std::endl << "> ";
+				out << e.what() << std::endl;
 				continue;
 			}
 		}
