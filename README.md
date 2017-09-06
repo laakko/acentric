@@ -8,6 +8,8 @@ One such interface is included in the project: a parser for the in-development A
 
 ![Screenshot of Acentric Features](/initial_feature_samples.png)
 
+Check the [wiki page](https://github.com/r734/acentric/wiki/Acentric-Language) for more details on the language.
+
 ### Build
 This library uses the CMake build system. You need CMake installed on your computer to build the project.
 
@@ -37,14 +39,9 @@ Priority of concepts to be implemented by this library include:
 * Intervals
 * Chords
 * Scales
-* Melodies
+* Time-dimension definitions (e.g. melodies, chord progressions)
 * Polyphony (counterpoint) with analysis/rule-checking
 * Harmony/dissonance calculation for simultaneous notes/chords
-
-### Level of Detail
-The library attempts to support exotic note/interval configurations. For instance, `A####4` is considered a valid note which is enharmonic with C#4.
-
-Because most users will never need such complexity, simple notation is also supported; e.g. `C#` is assumed to be in the fourth octave, and `M3` and `m3` are simply major third and minor third intervals, respectively.
 
 ### Support
 This library is being developed in one person's spare time in hopes of helping musically-inclined people anywhere and everywhere. Suggestions and questions submitted by the issue tracker are *completely welcome*, but a quick response (let alone a quick fix/implementation) is not guaranteed!
