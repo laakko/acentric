@@ -27,6 +27,8 @@ namespace acentric_lang
         acentric_lang::Parser::symbol_type lex(); // TODO figure out location reporting (make sure it works correctly)
 
 		std::ostream& getyyout() { return yyout; } // For use by the parser, so it will automatically have the same ostream as the lexer
+		std::istream& getyyin() { return yyin; }
+		void restart() { yyrestart(yyin); } // does this even do anything useful?
     };
 }
 

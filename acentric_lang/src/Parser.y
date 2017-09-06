@@ -48,11 +48,20 @@
 
     #define yylex lexer->lex
 
-    #define INTERACTIVE_OUT(output) \
-        if (res->interactive) lexer->getyyout() << output << std::endl << "> ";
+    #define OUT_RESULT(output) \
+        if (res->interactive) lexer->getyyout() << output;
 
-	#define INTERACTIVE_PROMPT_NEWLINE \
+	#define OUT_ERROR \
+		if (res->interactive) lexer->getyyout() << "Syntax error";
+
+	#define OUT_NEWLINE \
+		if (res->interactive) lexer->getyyout() << std::endl;
+
+	#define OUT_PROMPT \
 		if (res->interactive) lexer->getyyout() << "> ";
+
+	#define OUT_UNHANDLED_CHAR(output) \
+		if (res->interactive) lexer->getyyout() << "Unhandled char: " << output << " (ignored rest of line)";
 
 }
 
@@ -79,6 +88,7 @@
 
 %token <char> BASIC_NOTE
 %token <char> INTERVAL_TYPE
+%token <char> UNHANDLED_CHAR
 %token <int> POS_INTEGER
 %token <int> DOTS
 %type <int> octave
@@ -94,12 +104,19 @@
 %start root;
 
 root: %empty
-    | root note NEWLINE							{ res->noteResult = $2; INTERACTIVE_OUT($2) }
-    | root interval NEWLINE						{ res->intervalResult = $2; INTERACTIVE_OUT($2) }
-	| root NEWLINE								{ INTERACTIVE_PROMPT_NEWLINE }
+    | root complete_phrase NEWLINE				{ OUT_NEWLINE OUT_PROMPT }
+	| root complete_phrase error NEWLINE		{ OUT_NEWLINE OUT_ERROR OUT_NEWLINE OUT_PROMPT }
+	| root error NEWLINE						{ OUT_ERROR OUT_NEWLINE OUT_PROMPT }
+	| root NEWLINE								{ OUT_PROMPT }
     ;
 
-note: BASIC_NOTE offset octave                  { $$ = acentric_core::Note{$1, $2, $3}; }
+complete_phrase:
+	  note										{ res->noteResult = $1; OUT_RESULT($1) }
+	| interval									{ res->intervalResult = $1; OUT_RESULT($1) }
+	| UNHANDLED_CHAR							{ OUT_UNHANDLED_CHAR($1) }
+	;
+
+note: BASIC_NOTE offset octave					{ $$ = acentric_core::Note{$1, $2, $3}; }
     | note PLUS_SIGN interval					{ $$ = $1 + $3; }
 	| note MINUS_SIGN interval					{ $$ = $1 - $3; }
 	| interval PLUS_SIGN note					{ $$ = $3 + $1; }
@@ -111,7 +128,7 @@ offset: %empty									{ $$ = 0; }
     ;
 
 octave: %empty									{ $$ = 4; }
-    | POS_INTEGER								{ $$ = $1; }
+    | POS_INTEGER								{ $$ = $1; } /* need(?) to add negative octaves back in at some point */
 	| ZERO										{ $$ = 0; }
     ;
 
@@ -125,5 +142,5 @@ interval: INTERVAL_TYPE POS_INTEGER				{ $$ = acentric_core::Interval{$1, $2}; }
 
 void acentric_lang::Parser::error(const acentric_lang::Parser::location_type& l, const std::string& m)
 {
-    throw acentric_lang::Parser::syntax_error(l, m);
+    //throw acentric_lang::Parser::syntax_error(l, m);
 }

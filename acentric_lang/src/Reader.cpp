@@ -1,4 +1,5 @@
 #include <sstream>
+#include <stdexcept>
 
 #include "Reader.h"
 #include "Parser.hxx"
@@ -17,18 +18,25 @@ namespace acentric_lang {
 			parser.set_debug_level(1);
 		}
 
-		out << "Welcome to Acentric" << std::endl << "> ";
+		out << "Welcome to Acentric\n> ";
 
 		while (true) {
 			try {
 				parser.parse();
 			}
-			catch (const char* s) { // TODO replace with actual exception from acentric core (when implemented)
-				out << s << std::endl;
+			catch (const std::invalid_argument& e) {
+				out << e.what() << std::endl;
 				continue;
 			}
 			catch (const Parser::syntax_error& e) {
-				out << e.what() << std::endl;
+				if (debug) {
+					err << e.what() << std::endl;
+				}
+				else {
+					out << "Syntax error";
+				}
+				//lexer.getyyin().ignore(INT_MAX, '\n');
+				//lexer.getyyin().putback('\n'); // HACK...deal with the unexpected NEWLINE case (but unnecessary for other cases) TODO fix
 				continue;
 			}
 		}

@@ -54,7 +54,7 @@
 [ \t]           { loc.step(); }
 \\\r?\n         { loc.lines(); loc.step(); }
 \r?\n           { loc.lines(); loc.step(); return Parser::make_NEWLINE(loc); }
-.               { yyout << "Unhandled character: " << yytext << std::endl; }
+.               { yyin.ignore(INT_MAX, '\n'); yyin.putback('\n'); return Parser::make_UNHANDLED_CHAR(*yytext, loc); }
 <<EOF>>         { return Parser::make_END(loc); }
 
 %%
