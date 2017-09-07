@@ -1,9 +1,9 @@
-#include <iostream>     // cin/cerr etc ...
-#include <string>       // getline
+#include <iostream>
+#include <string>
 
 #include "Reader.h"
 
 int main (int argc, char *argv[])
 {
-    acentric_lang::Reader::doInteractive(true);
+    acentric_lang::Reader::doInteractive();
 }

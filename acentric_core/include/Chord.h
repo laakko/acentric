@@ -18,15 +18,13 @@ namespace acentric_core {
 		std::vector<Interval> pitches;
 
 	public:
-		Chord() {}; // default ctor needed for parser (?)
+		Chord() {}; // default ctor needed for parser (maybe A maj would be a decent default?)
 		Chord(Note root, BasicChord chord);
 		Chord(Note root, std::vector<Interval> pitches);
 
 		Note getBase() const { return root; }
 		std::vector<Interval> getPitches() const { return pitches; }
 
-		void insertPitch(Interval pitchToInsert);
-		void removePitch(Interval pitchToRemove);
 		void setRoot(Note newRoot);
 
 		// TODO add functionality to get inversions

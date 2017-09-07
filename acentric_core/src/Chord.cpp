@@ -99,21 +99,6 @@ namespace acentric_core {
 		this->pitches = pitches;
 	}
 
-	void Chord::insertPitch(Interval pitchToInsert) // TODO implement
-	{
-		//for (int i = 0; i < pitches.size(); ++i) {
-		//	if (pitchToInsert.getBasicDistance() < pitches.at(i).getBasicDistance()) {
-		//		continue;
-		//	}
-		//	else if (pitchToInsert.getBasicDistance() == pitches.at(i).getBasicDistance()) {
-		//		throw "Attempted to insert duplicate pitch into a Chord"; // TODO maybe just fail silently instead of throwing?
-		//	}
-		//	else if (pitchToInsert.getBasicDistance() > pitches.at(i).getBasicDistance()){
-		//		pitches.insert(pitchToInsert);
-		//	}
-		//}
-	}
-
 	void Chord::setRoot(Note newRoot)
 	{
 		this->root = newRoot;
@@ -121,14 +106,18 @@ namespace acentric_core {
 
 	std::ostream & operator<<(std::ostream & os, const Chord & chord)
 	{
+		// TODO add functionality for recognizing standard chords and their inversions
+		// this will take a very long time to do right but will be very useful
+		// Some sort of search through a pre-built tree may be a good approach...
+		// Check from root for match; if none, check inversions; if none still, default to just printing all notes
+
 		Note base = chord.getBase();
 		std::vector<Interval> pitches = chord.getPitches();
-		os << "(" << base;
+		os << "Chord: " << base;
 
 		for (auto pitch : pitches) {
 			os << " " << (base + pitch);
 		}
-		os << ")";
 		return os;
 	}
 
