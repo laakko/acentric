@@ -87,14 +87,14 @@ namespace acentric_core {
 		root(root)
 	{
 		// Validate given pitches; they should be in strictly increasing order from the root (no duplicates)
-		if (pitches.size() == 0) throw "Empty Interval vector passed to Chord ctor";
+		if (pitches.size() == 0) throw std::invalid_argument("Attempted to create a Chord with no non-root pitches");
 
 		int prevDistance = pitches.at(0).getBasicDistance();
-		if (prevDistance == 0) throw "P1 or d2 in Interval vector passed to Chord ctor (duplicates root note)"; // TODO confusing error message, fix
+		if (prevDistance == 0) throw std::invalid_argument("Attempted to create a Chord with a P1 or d2 pitch (duplicates root note)"); // TODO confusing error message, fix
 
 		for (int i = 1; i < pitches.size(); ++i) {
-			if (!(pitches.at(i).getBasicDistance() > prevDistance)) throw "Non-increasing Interval vector passed to Chord ctor"; // TODO maybe try sorting?
-			prevDistance = pitches.at(i).getBasicDistance();
+			if (!(pitches.at(i).getBasicDistance() > prevDistance)) throw std::invalid_argument("Attempted to create a chord with non-increasing pitches"); // TODO maybe try sorting?
+			prevDistance = pitches.at(i).getBasicDistance(); // TODO also need to compare semitone distance, not just basic distance!
 		}
 		this->pitches = pitches;
 	}

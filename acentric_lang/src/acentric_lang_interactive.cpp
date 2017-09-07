@@ -5,5 +5,5 @@
 
 int main (int argc, char *argv[])
 {
-    acentric_lang::Reader::doInteractive();
+    acentric_lang::Reader::doInteractive(true);
 }

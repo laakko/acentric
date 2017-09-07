@@ -41,6 +41,7 @@
 "_"             { return Parser::make_UNDERSCORE(loc); }
 [\.]+           { return Parser::make_DOTS(strlen(yytext), loc); }
 "^"             { return Parser::make_CARAT(loc); }
+"\*"			{ return Parser::make_STAR(loc); }
 "("             { return Parser::make_LPAREN(loc); }
 ")"             { return Parser::make_RPAREN(loc); }
 ":"				{ return Parser::make_COLON(loc); }

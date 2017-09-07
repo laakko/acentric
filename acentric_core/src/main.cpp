@@ -18,6 +18,12 @@ int main() {
 	Chord dsMaj{ Note{'D', 1}, BasicChord::maj };
 	std::cout << dsMaj << std::endl;
 
+	std::vector<Interval> chordSuffix;
+	chordSuffix.push_back(Interval{ 'm', 3 });
+	chordSuffix.push_back(Interval{ 'P', 5 });
+
+	// std::cout << chordSuffix << std::endl; // won't compile, std::vector has no in-built operator<<
+
 	int i;
 	std::cin >> i;
     exit(0);

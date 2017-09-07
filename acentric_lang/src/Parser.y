@@ -26,6 +26,7 @@
     #include "Note.h"
     #include "Interval.h"
     #include "BasicNote.h"
+	#include "Chord.h"
 
     namespace acentric_lang {
         class Lexer; // (Forward declaration to avoid circular dependency)
@@ -77,6 +78,7 @@
     PLUS_SIGN
     UNDERSCORE
     CARAT
+	STAR
     LPAREN
     RPAREN
     WHITESPACE
@@ -95,6 +97,8 @@
 %type <int> offset
 %type <acentric_core::Note> note
 %type <acentric_core::Interval> interval
+%type <std::vector<acentric_core::Interval>> interval_list
+%type <acentric_core::Chord> chord
 
 %left COLON
 %left MINUS_SIGN PLUS_SIGN
@@ -113,6 +117,13 @@ root: %empty
 complete_phrase:
 	  note										{ res->noteResult = $1; OUT_RESULT($1) }
 	| interval									{ res->intervalResult = $1; OUT_RESULT($1) }
+/*	| interval_list
+		{
+			for (auto interval : $1) {
+				std::cout << interval << std::endl;
+			}
+		} */
+	| chord										{ OUT_RESULT($1) }
 	| UNHANDLED_CHAR							{ OUT_UNHANDLED_CHAR($1) }
 	;
 
@@ -136,6 +147,15 @@ interval: INTERVAL_TYPE POS_INTEGER				{ $$ = acentric_core::Interval{$1, $2}; }
 	| note COLON note							{ $$ = $1.getInterval($3); }
 	| interval PLUS_SIGN interval				{ $$ = $1 + $3; }
 	| interval MINUS_SIGN interval				{ $$ = $1 - $3; }
+	;
+
+interval_list:	%empty							{ $$ = std::vector<acentric_core::Interval>{}; }
+	| interval interval_list					{ $2.insert($2.begin(), $1); $$ = std::move($2); }
+	| interval UNDERSCORE interval_list			{ $3.insert($3.begin(), $1); $$ = std::move($3); }
+	;
+
+chord:
+	  note STAR interval_list					{ $$ = acentric_core::Chord{$1, $3}; }
 	;
 
 %%
