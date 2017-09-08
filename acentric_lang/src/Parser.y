@@ -62,7 +62,7 @@
 		if (res->interactive) lexer->getyyout() << "> ";
 
 	#define OUT_UNHANDLED_CHAR(output) \
-		if (res->interactive) lexer->getyyout() << "Unhandled char: " << output << " (ignored rest of line)";
+		if (res->interactive) lexer->getyyout() << "Syntax error";
 
 }
 

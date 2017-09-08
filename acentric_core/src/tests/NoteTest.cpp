@@ -2,6 +2,8 @@
 #include "Note.h"
 
 TEST_CASE("Note constructor tests") {
+	using acentric_core::Note;
+	using acentric_core::BasicNote;
 
 	Note note;
 
@@ -10,35 +12,24 @@ TEST_CASE("Note constructor tests") {
 	REQUIRE_NOTHROW(note = Note(BasicNote::C, 1234567, -1234567));
 
 	REQUIRE_NOTHROW(note = Note());
-	REQUIRE_THROWS(note = Note(""));
+	REQUIRE_THROWS(note = Note('a'));
+	REQUIRE_THROWS(note = Note('H'));
 
-	REQUIRE_NOTHROW(note = Note("A"));
-	REQUIRE_NOTHROW(note = Note("A#"));
-	REQUIRE_NOTHROW(note = Note("A4"));
-	REQUIRE_NOTHROW(note = Note("A#4"));
-	REQUIRE_NOTHROW(note = Note("A##4"));
-	REQUIRE_NOTHROW(note = Note("A###4"));
-	REQUIRE_NOTHROW(note = Note("Abbb4"));
-	REQUIRE_NOTHROW(note = Note("Abbb-4"));
-	REQUIRE_NOTHROW(note = Note("A#b###b##bbb-123456"));
-
-	REQUIRE_NOTHROW(note = Note("A(#^0)"));
-	REQUIRE_NOTHROW(note = Note("A(#^09)"));
-	REQUIRE_NOTHROW(note = Note("A(b^0)0"));
-	REQUIRE_NOTHROW(note = Note("A(#^012)014"));
-	REQUIRE_NOTHROW(note = Note("A(#^0)-0"));
-	REQUIRE_NOTHROW(note = Note("A(b^123456)"));
-	REQUIRE_NOTHROW(note = Note("A(#^123456)123456"));
-
-	REQUIRE_THROWS(note = Note("A()"));
-	REQUIRE_THROWS(note = Note("A(b^-0)"));
-	REQUIRE_THROWS(note = Note("A(#^-1)"));
-	REQUIRE_THROWS(note = Note("Ab(#^1)12"));
-	REQUIRE_THROWS(note = Note("AA"));
+	REQUIRE_NOTHROW(note = Note('A'));
+	REQUIRE_NOTHROW(note = Note('A', 1));
+	REQUIRE_NOTHROW(note = Note('A', 0, 4));
+	REQUIRE_NOTHROW(note = Note('A', 1, 4));
+	REQUIRE_NOTHROW(note = Note('A', 2, 4));
+	REQUIRE_NOTHROW(note = Note('A', 3, 4));
+	REQUIRE_NOTHROW(note = Note('A', -3, 4));
+	REQUIRE_NOTHROW(note = Note('A', -3, -4));
+	REQUIRE_NOTHROW(note = Note('A', 1, -123456));
 
 }
 
 TEST_CASE("Note math tests") {
+	using acentric_core::Note;
+	using acentric_core::BasicNote;
 
 	Note note1{ BasicNote::A, 0, 4 };
 	Note note2{ BasicNote::E, -1, -4 };
