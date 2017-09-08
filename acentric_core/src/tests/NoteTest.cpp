@@ -1,5 +1,6 @@
 #include "doctest.h"
 #include "Note.h"
+#include "Interval.h"
 
 TEST_CASE("Note constructor tests") {
 	using acentric_core::Note;
@@ -30,6 +31,7 @@ TEST_CASE("Note constructor tests") {
 TEST_CASE("Note math tests") {
 	using acentric_core::Note;
 	using acentric_core::BasicNote;
+	using acentric_core::Interval;
 
 	Note note1{ BasicNote::A, 0, 4 };
 	Note note2{ BasicNote::E, -1, -4 };
@@ -43,5 +45,10 @@ TEST_CASE("Note math tests") {
 
 	REQUIRE(note2.getBasicDistance(note1) == 52);
 	REQUIRE(note1.getBasicDistance(note2) == 52);
+
+	Interval distBetween{ note1.getInterval(note2) };
+	REQUIRE(distBetween.getBasicDistance() == 52);
+	REQUIRE(distBetween.getBasicInterval() == 53);
+	REQUIRE(distBetween.getSemitones() == 90);
 
 }
