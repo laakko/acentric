@@ -14,12 +14,6 @@
 
 namespace acentric_lang
 {
-    // To feed data back to bison, the yylex method needs yylval and
-    // yylloc parameters. Since the yyFlexLexer class is defined in the
-    // system header <FlexLexer.h> the signature of its yylex() method
-    // can not be changed anymore. This makes it necessary to derive a
-    // scanner class that provides a method with the desired signature:
-
     class Lexer : public yyFlexLexer
     {
     public:

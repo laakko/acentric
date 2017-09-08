@@ -35,12 +35,12 @@ namespace acentric_lang {
 				else {
 					out << "Syntax error";
 				}
-				//lexer.getyyin().ignore(INT_MAX, '\n');
-				//lexer.getyyin().putback('\n'); // HACK...deal with the unexpected NEWLINE case (but unnecessary for other cases) TODO fix
 				continue;
 			}
 			catch (std::exception e) {
-				err << "Something went REALLY wrong, and it gave me this error message, and I don't really know what it means, but maybe you or some other smart person can figure it out: " << e.what() << std::endl;
+				err << "Something went REALLY wrong, and it gave me this error message, \
+						and I (the lowly Reader class) don't really know what it means, \
+						but maybe you or some other smart person can figure it out: " << e.what() << std::endl;
 			}
 		}
 	}
