@@ -13,15 +13,15 @@ Check the [wiki page](https://github.com/r734/acentric/wiki/Acentric-Language) f
 ### Build
 This library uses the CMake build system. You need CMake installed on your computer to build the project.
 
-Currently, flex and bison are *required* to build. On Linux, flex/bison should be available from your package manager (if they aren't installed already). On windows, you'll need to install Cygwin with flex.exe and bison.exe. This will be cleaned up in the future.
-
-With flex and bison installed, go to the root directory of the project, open a command window or terminal and type:
+Go to the root directory of the project, open a command window or terminal and type:
 
 ```sh
 mkdir build
 cd build
 cmake ..
 ```
+
+(Flex and Bison are *optional* to build--only a developer working on the language needs them. On Linux, flex/bison should be available from your package manager (if they aren't installed already). On windows, you'll need to install Cygwin with flex.exe and bison.exe. This will be cleaned up in the future. You'll also need to turn the BUILD_LEXER_AND_PARSER_SOURCE CMake option on, which is off by default.)
 
 If you are on Windows using Visual Studio, there will be a .sln file in the `build` folder which can be opened in Visual Studio.
 
