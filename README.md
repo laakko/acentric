@@ -1,3 +1,5 @@
+![Acentric Logo](/acentric_logo.png)
+
 ## Acentric: a work-in-progress music theory library and language
 
 This is a work-in-progress library for music theory analysis. Its purpose is to assist students, musicians, and researchers with calculating and understanding complex music theory concepts and automating tedious tasks such as determining scale degrees or analyzing musical parts for compliance with counterpoint rules.
