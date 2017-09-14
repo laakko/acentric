@@ -99,11 +99,6 @@ namespace acentric_core {
 		this->pitches = pitches;
 	}
 
-	void Chord::setRoot(Note newRoot)
-	{
-		this->root = newRoot;
-	}
-
 	std::ostream & operator<<(std::ostream & os, const Chord & chord)
 	{
 		// TODO add functionality for recognizing standard chords and their inversions
@@ -111,7 +106,7 @@ namespace acentric_core {
 		// Some sort of search through a pre-built tree may be a good approach...
 		// Check from root for match; if none, check inversions; if none still, default to just printing all notes
 
-		Note base = chord.getBase();
+		Note base = chord.getRoot();
 		std::vector<Interval> pitches = chord.getPitches();
 		os << "Chord: " << base;
 
