@@ -14,8 +14,9 @@ namespace acentric_core {
 	class Chord {
 
 	private:
-		Note root;
+		Note root = 1;
 		std::vector<Interval> pitches;
+		void cleanAndValidate();
 
 	public:
 		Chord() {}; // default ctor needed for parser

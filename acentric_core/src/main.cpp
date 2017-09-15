@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <string>
 #include <vector>
 #include "BasicNote.h"
@@ -12,17 +13,26 @@
 int main() {
 	using namespace acentric_core;
 
-	DiatonicScale csLocrian{ Note{'A'}, BasicScale::Locrian };
-	std::cout << csLocrian << std::endl;
-
-	Chord dsMaj{ Note{'D', 1}, BasicChord::maj };
-	std::cout << dsMaj << std::endl;
-
 	std::vector<Interval> chordSuffix;
-	chordSuffix.push_back(Interval{ 'm', 3 });
+	//chordSuffix.push_back(Interval{ 'P', 1 });
+	chordSuffix.push_back(Interval{ 'a', 3 });
+	chordSuffix.push_back(Interval{ 'a', 3 });
+	//chordSuffix.push_back(Interval{ 'a', 2 });
 	chordSuffix.push_back(Interval{ 'P', 5 });
+	chordSuffix.push_back(Interval{ 'm', 2 });
+	chordSuffix.push_back(Interval{ 'm', 2 });
+	chordSuffix.push_back(Interval{ 'm', 2 });
 
-	// std::cout << chordSuffix << std::endl; // won't compile, std::vector has no in-built operator<<
+	try {
+		Chord myChord{ Note{ 'A' }, chordSuffix };
+		std::cout << myChord;
+	}
+	catch (std::invalid_argument& e) {
+		std::cout << e.what() << std::endl;
+	}
+
+
+
 
 	int i;
 	std::cin >> i;

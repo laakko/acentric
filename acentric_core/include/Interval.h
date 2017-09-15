@@ -71,6 +71,11 @@ namespace acentric_core {
 		// TODO add chromatic intervals, e.g. C4-F4 = I5
 	};
 
+	/*! Comparison class to compare Intervals based on semitone distance. True iff `a`'s semitone distance is less than `b`'s semitone distance. */
+	struct IntervalSemitonesLessThan {
+		bool operator()(const Interval& a, const Interval& b) { return a.getSemitones() < b.getSemitones(); }
+	};
+
 	/*! Prints the Interval in human-readable format, choosing from traditional or parenthesis-based format based on the interval distance.
 
 	If a standard format exists for this interval, the function will prefer that format. If, on the other hand, no standard format exists
