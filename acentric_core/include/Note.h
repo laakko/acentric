@@ -98,6 +98,10 @@ namespace acentric_core {
 
 	};
 
+	struct NoteAbsoluteDistLessThan {
+		bool operator()(const Note& a, const Note& b) { return a.getAbsoluteDistance() < b.getAbsoluteDistance(); }
+	};
+
 	/*! Prints the Note in human-readable format, choosing between standard or parenthesis-based representation based on the number of sharps or flats in the Note.
 	If the Note has two flats, one flat, no sharps/flats, one sharp, or two sharps, then the function will use standard notation, e.g. F#4 or Bbb3.
 

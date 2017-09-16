@@ -7,6 +7,8 @@
 namespace acentric_core {
 	void Chord::cleanAndValidate() // TODO this function needs rigorous testing and documentation (also might need this func for scales later)
 	{
+
+
 		// Sort intervals by semitone distance
 		std::sort(pitches.begin(), pitches.end(), IntervalSemitonesLessThan());
 
@@ -35,7 +37,7 @@ namespace acentric_core {
 				}
 				std::ostringstream errorString;
 				errorString << "Attempted to create chord with non-strictly-increasing semitone distances\n"
-					<< "(intervals " << pitches.at(i - 1) << " and " << pitches.at(i) << " have semitone distances " 
+					<< "(intervals " << pitches.at(i - 1) << " and " << pitches.at(i) << " have semitone distances "
 					<< prevSemitones << " and " << curSemitones << ")";
 
 				throw std::invalid_argument(errorString.str());
@@ -53,6 +55,11 @@ namespace acentric_core {
 
 			prevSemitones = curSemitones;
 			prevBasicDist = curBasicDist;
+		}
+
+		// Ensure resulting pitch vector has more than just the P1
+		if (pitches.size() <= 1) {
+			throw std::invalid_argument("Attempted to create chord without any non-P1 interval");
 		}
 	}
 
@@ -156,6 +163,35 @@ namespace acentric_core {
 		root(root),
 		pitches(pitches)
 	{
+		this->cleanAndValidate();
+	}
+
+	Chord::Chord(Note root, std::vector<Note> otherNotes) : // TODO test
+		root(root)
+	{
+		for (auto otherNote : otherNotes) {
+			this->pitches.push_back(root.getInterval(otherNote));
+		}
+		this->cleanAndValidate();
+	}
+
+	Chord::Chord(std::vector<Note> notes) // TODO test
+	{
+		// Ensure chord has at least two pitches (really just need size >0 here but might as well deal with the size==1 case before the validation function sees it)
+		if (notes.size() <= 1) {
+			throw std::invalid_argument("Attempted to create Chord with Note vector size " + std::to_string(notes.size()) \
+				+ "\n(size must be >= 2)");
+		}
+
+		// Find minimum note; set as root
+		std::sort(notes.begin(), notes.end(), NoteAbsoluteDistLessThan());
+		this->root = notes.at(0);
+
+		// Set intervals based on the root
+		this->pitches.push_back(Interval{ 'P', 1 });
+		for (int i = 1; i < notes.size(); ++i) {
+			this->pitches.push_back(notes.at(0).getInterval(notes.at(i)));
+		}
 		this->cleanAndValidate();
 	}
 
