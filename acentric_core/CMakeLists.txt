@@ -7,11 +7,13 @@ add_library(acentric_core
 	include/DiatonicScale.h
 	include/Chord.h
 	include/BasicChord.h
+	include/CounterpointChecker.h
 	
 	src/Note.cpp
 	src/Interval.cpp
 	src/DiatonicScale.cpp
 	src/Chord.cpp
+	src/CounterpointChecker.cpp
 )
 target_include_directories(acentric_core
 	PUBLIC include)
