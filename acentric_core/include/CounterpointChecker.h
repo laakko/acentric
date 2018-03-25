@@ -13,7 +13,7 @@ namespace acentric_core {
 	public:
 		// Will eventually add options for scoring and even which rules to use/ignore
 		// Make sure to validate (both vectors must be same length)
-		CounterpointChecker(const std::vector<Note>& cantusFirmus, const std::vector<Note>& countpoint);
+		CounterpointChecker(const std::vector<Note>& cantusFirmus, const std::vector<Note>& counterpoint);
 
 		// The big one...validate rules (use internal functions?) for every note...use openmusictheory.com/firstSpecies.html list of rules
 		bool counterpointIsValid() const;

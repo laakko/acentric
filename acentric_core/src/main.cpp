@@ -9,30 +9,50 @@
 #include "BasicScale.h"
 #include "Chord.h"
 #include "BasicChord.h"
+#include "CounterpointChecker.h"
+
+using namespace acentric_core;
+
+void printVec(std::vector<Note>& notes) {
+	for (auto note : notes) {
+		std::cout << note << "\t";
+	}
+	std::cout << std::endl;
+}
 
 int main() {
-	using namespace acentric_core;
 
-	std::vector<Interval> chordSuffix;
-	//chordSuffix.push_back(Interval{ 'P', 1 });
-	chordSuffix.push_back(Interval{ 'a', 3 });
-	chordSuffix.push_back(Interval{ 'a', 3 });
-	//chordSuffix.push_back(Interval{ 'a', 2 });
-	chordSuffix.push_back(Interval{ 'P', 5 });
-	chordSuffix.push_back(Interval{ 'm', 2 });
-	chordSuffix.push_back(Interval{ 'm', 2 });
-	chordSuffix.push_back(Interval{ 'm', 2 });
+	std::vector<Note> cf;
+	std::vector<Note> cp;
 
-	try {
-		Chord myChord{ Note{ 'A' }, chordSuffix };
-		std::cout << myChord;
+	cf.push_back(Note{ BasicNote::C });
+	cf.push_back(Note{ BasicNote::D });
+	cf.push_back(Note{ BasicNote::E });
+	cf.push_back(Note{ BasicNote::F });
+	cf.push_back(Note{ BasicNote::G });
+	cf.push_back(Note{ BasicNote::A, 0, 5 });
+	cf.push_back(Note{ BasicNote::B, 0, 5 });
+	cf.push_back(Note{ BasicNote::C, 0, 5 });
+
+	cp.push_back(Note{ BasicNote::C });
+	cp.push_back(Note{ BasicNote::D });
+	cp.push_back(Note{ BasicNote::E });
+	cp.push_back(Note{ BasicNote::F });
+	cp.push_back(Note{ BasicNote::G });
+	cp.push_back(Note{ BasicNote::A, 0, 5 });
+	cp.push_back(Note{ BasicNote::B, 0, 5 });
+	cp.push_back(Note{ BasicNote::C, 0, 5 });
+
+	printVec(cf);
+	printVec(cp);
+
+	auto cpc = CounterpointChecker(cf, cp);
+	if (cpc.counterpointIsValid()) {
+		std::cout << "Counterpoint is valid\n";
 	}
-	catch (std::invalid_argument& e) {
-		std::cout << e.what() << std::endl;
+	else {
+		std::cout << "Counterpoint is not valid\n";
 	}
-
-
-
 
 	int i;
 	std::cin >> i;
