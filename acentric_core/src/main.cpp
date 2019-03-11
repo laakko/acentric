@@ -24,7 +24,13 @@ int main() {
 
 
 
-	std::cout << "A dorian scale: " <<  DiatonicScale(Note {BasicNote::A}, BasicScale {BasicScale::Major}) << std::endl;
+	std::cout << "A dorian scale: " <<  DiatonicScale(Note {BasicNote::A}, BasicScale {BasicScale::Dorian}) << std::endl;
+	std::cout << "E minor scale: " <<  DiatonicScale(Note {BasicNote::E}, BasicScale {BasicScale::Minor}) << std::endl;
+	std::cout << "E minor pentatonic scale: " <<  DiatonicScale(Note {BasicNote::E}, BasicScale {BasicScale::MinorPentatonic}) << std::endl;
+	std::cout << "C blues scale: " <<  DiatonicScale(Note {BasicNote::C}, BasicScale {BasicScale::Blues}) << std::endl;
+	std::cout << "E Metallica scale: " <<  DiatonicScale(Note {BasicNote::E}, BasicScale {BasicScale::Metallica}) << std::endl;
+
+
 
 	std::cout << Chord(Note {BasicNote::C}, BasicChord {BasicChord::min}) << std::endl;
 

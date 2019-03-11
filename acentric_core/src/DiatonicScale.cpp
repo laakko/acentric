@@ -5,6 +5,8 @@ namespace acentric_core {
 	DiatonicScale::DiatonicScale(Note base, std::vector<Interval> degrees)
 	{
 		// Check input
+
+		/*
 		if (degrees.size() != 6)
 			throw "bad degrees vector size in DiatonicScale ctor: " + std::to_string(degrees.size());
 		for (int i = 0; i < degrees.size(); ++i) {
@@ -14,7 +16,9 @@ namespace acentric_core {
 			// Make sure each degree is properly ordered by number of semitones; ensure 7 distinct pitch classes are in the scale
 			if (i > 0 && (degrees.at(i).getSemitones() <= degrees.at(i - 1).getSemitones()))
 				throw "improper ordering of semitones passed to DiatonicScale ctor"; // TODO make better error messages
-		}
+		}*/
+
+
 		this->base = base;
 		this->degrees = degrees;
 	}
@@ -23,8 +27,6 @@ namespace acentric_core {
 	{
 		this->base = base;
 
-		//TODO should I delegate to the above constructor to validate the degree vectors generated here?
-		//TODO alphabetical order, or musical order? right now it's somewhat alphabetical
 		switch (scale) {
 		case BasicScale::Aeolian:
 		case BasicScale::Minor:
@@ -86,6 +88,39 @@ namespace acentric_core {
 			degrees.push_back(Interval{ 'm', 2 });
 			degrees.push_back(Interval{ 'm', 3 });
 			degrees.push_back(Interval{ 'P', 4 });
+			degrees.push_back(Interval{ 'P', 5 });
+			degrees.push_back(Interval{ 'm', 6 });
+			degrees.push_back(Interval{ 'm', 7 });
+			break;
+		
+		case BasicScale::Blues:
+			degrees.push_back(Interval{ 'm', 3});
+			degrees.push_back(Interval{ 'P', 4});
+			degrees.push_back(Interval{ 'm', 5});
+			degrees.push_back(Interval{ 'P', 5});
+			degrees.push_back(Interval{ 'm', 7});
+			break;
+
+		case BasicScale::MinorPentatonic:
+			degrees.push_back(Interval{ 'm', 3});
+			degrees.push_back(Interval{ 'P', 4});
+			degrees.push_back(Interval{ 'P', 5});
+			degrees.push_back(Interval{ 'm', 7});
+			break;
+
+		case BasicScale::MajorPentatonic:
+			degrees.push_back(Interval{ 'M', 2});
+			degrees.push_back(Interval{ 'M', 3});
+			degrees.push_back(Interval{ 'P', 5});
+			degrees.push_back(Interval{ 'M', 6});
+			break;
+
+		case BasicScale::Metallica:
+			degrees.push_back(Interval{ 'm', 2 });
+			degrees.push_back(Interval{ 'M', 2 });
+			degrees.push_back(Interval{ 'm', 3 });
+			degrees.push_back(Interval{ 'P', 4 });
+			degrees.push_back(Interval{ 'm', 5});
 			degrees.push_back(Interval{ 'P', 5 });
 			degrees.push_back(Interval{ 'm', 6 });
 			degrees.push_back(Interval{ 'm', 7 });

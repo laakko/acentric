@@ -32,9 +32,10 @@ namespace acentric_core {
 		case 'm':
 			if (remainder == 1) this->semitones += 1; // m2
 			else if (remainder == 2) this->semitones += 3; // m3
+			else if (remainder == 4) this->semitones += 6; // m5
 			else if (remainder == 5) this->semitones += 8; // m6
 			else if (remainder == 6) this->semitones += 10; // m7
-			else throw std::invalid_argument("Invalid interval number given for interval class m: " + std::to_string(intervalNumber) \
+			else throw std::invalid_argument("Invalid interval number given for interval class m: " + std::to_string(remainder) + std::to_string(intervalNumber) \
 				+ "\n(number mod 7 must equal 2, 3, 6, or 7)");
 			break;
 		case 'M':

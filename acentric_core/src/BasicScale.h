@@ -19,10 +19,11 @@ namespace acentric_core {
 		Lydian			/*! The Lydian mode; intervals P1 M2 M3 A4 P5 M6 M7 */,
 		Mixolydian		/*! The Mixolydian mode; intervals P1 M2 M3 P4 P5 M6 m7 */,
 		Aeolian			/*! The Aeolian mode, also known as the natural minor scale; intervals P1 M2 m3 P4 P5 m6 m7 */,
-		Locrian			/*! The Locrian mode; intervals P1 m2 m3 P4 d5 m6 m7 */
-
-		// Chromatic, // TODO should non-diatonic scales go in this enum or some other one?
-		// MelodicMinor, // TODO figure out how to deal with this one
+		Locrian			/*! The Locrian mode; intervals P1 m2 m3 P4 d5 m6 m7 */,
+		MinorPentatonic /*! Minor Pentatonic scales; */,
+		MajorPentatonic /*! Major Pentatonic scales; */,
+		Blues			/*! The blues scale; Based on pentatonic scales with added m5 blue note */,
+		Metallica		/*! Minor scale with an added b2 and b5*/
 	};
 
 }
