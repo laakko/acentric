@@ -1,6 +1,6 @@
-// DiatonicScale.h
-#ifndef DIATONIC_SCALE_H
-#define DIATONIC_SCALE_H
+// Scale.h
+#ifndef _SCALE_H
+#define _SCALE_H
 
 #include <vector>
 #include "BasicScale.h"
@@ -9,12 +9,12 @@
 
 namespace acentric_core {
 
-	/*! The DiatonicScale class represents a musical scale with seven notes in ascending order, where each basic note name is used.
+	/*! The Scale class represents a musical scale with seven notes in ascending order, where each basic note name is used.
 
 	It consists of a Note, which is the base of the scale, and a vector of six Intervals, representing degrees two through seven
 
 	This class assumes that the first degree of a scale is always a perfect unison ("P1"). */
-	class DiatonicScale {
+	class Scale {
 
 	private:
 		Note base;
@@ -32,7 +32,7 @@ namespace acentric_core {
 		This constructor expects a Note as a base and a vector of Intervals.
 
 		The Intervals vector must include basic intervals two through seven, in that order, and their semitone distances must be strictly increasing. */
-		DiatonicScale(Note base, std::vector<Interval> degrees);
+		Scale(Note base, std::vector<Interval> degrees);
 
 		/*! The Note-based constructor.
 
@@ -41,12 +41,12 @@ namespace acentric_core {
 		The Notes vector must include six Notes in increasing order from the base note. Their absolute distances must be strictly increasing.
 
 		The octave designation of each note is ignored. */
-		// DiatonicScale(Note base, std::vector<Note> degrees); // TODO implement
+		// Scale(Note base, std::vector<Note> degrees); // TODO implement
 
 		/*! The BasicScale-based constructor.
 
-		This constructor expects a Note as a base and a BasicScale. For example, a Note C4 and BasicScale::Major would produce a C-major DiatonicScale. */
-		DiatonicScale(Note base, BasicScale scale); // TODO finish implementing, dangerous to use right now
+		This constructor expects a Note as a base and a BasicScale. For example, a Note C4 and BasicScale::Major would produce a C-major Scale. */
+		Scale(Note base, BasicScale scale); // TODO finish implementing, dangerous to use right now
 
 		/*! Returns a vector of Notes representing degrees two through seven. This may be changed in the future to include the first (base) degree. */
 		std::vector<Note> getDegrees() const;
@@ -55,16 +55,16 @@ namespace acentric_core {
 		Note getBase() const { return base; };
 
 		// TODO ...do I even need these functions? how robust do I want this library to be?
-		//DiatonicScale getRelative() const;
-		//DiatonicScale getParallel() const;
+		//Scale getRelative() const;
+		//Scale getParallel() const;
 
 		bool isInScale(Note &note) const;
 		Note simplify(Note &note) const;
 
 	};
 
-	std::ostream& operator<<(std::ostream &os, const DiatonicScale &scale);
+	std::ostream& operator<<(std::ostream &os, const Scale &scale);
 
 }
 
-#endif //DIATONIC_SCALE_H
+#endif //_SCALE_H
