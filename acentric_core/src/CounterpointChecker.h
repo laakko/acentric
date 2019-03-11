@@ -1,7 +1,7 @@
 #ifndef COUNTERPOINT_CHECKER_H
 #define COUNTERPOINT_CHECKER_H
 
-#include <Note.h>
+#include "Note.h"
 
 namespace acentric_core {
 
